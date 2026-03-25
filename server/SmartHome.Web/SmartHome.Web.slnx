@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SmartHome.Core/SmartHome.Core.csproj" Id="7c5e45fd-725b-480c-8bd7-e3b77f550cbd" />
+  <Project Path="SmartHome.Data.Mock/SmartHome.Data.Mock.csproj" Id="6a5d8fd8-2373-4543-88d6-2633cc0c7fd2" />
+  <Project Path="SmartHome.Web/SmartHome.Web.csproj" />
+</Solution>

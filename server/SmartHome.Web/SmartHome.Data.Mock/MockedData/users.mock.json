@@ -1,0 +1,27 @@
+﻿[
+  {
+    "Login": "admin",
+    "Password": "12345",
+    "Roles": [
+      "Admin"
+    ],
+    "CreatedBy": null
+  },
+  {
+    "Login": "NoobPsycho",
+    "Password": "123456",
+    "Roles": [
+      "User"
+    ],
+    "CreatedBy": null
+  },
+  {
+    "Login": "NoobPsycho100",
+    "Password": "123456",
+    "Roles": [
+      "Admin",
+      "User"
+    ],
+    "CreatedBy": "admin"
+  }
+]
