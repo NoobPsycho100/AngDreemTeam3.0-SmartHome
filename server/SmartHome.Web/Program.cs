@@ -24,6 +24,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors();
+
 builder.Services.AddControllers(options =>
 {
     options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
@@ -67,6 +69,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options => {
+    options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 

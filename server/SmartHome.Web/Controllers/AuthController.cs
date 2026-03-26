@@ -80,7 +80,9 @@ public class AuthController : ControllerBase
     private async Task<ActionResult> ReturnAuthToken(string login)
     {
         var token = await _authService.GenerateToken(login);
-        Response.Headers.Append("Authorization", $"Bearer {token}");
+        Response.Headers.Append("x-auth-token", token);
+        Response.Headers.Append("Access-Control-Expose-Headers", "x-auth-token");
+        
         return Accepted();
     }
 

@@ -1,1 +1,7 @@
-test
+{{ currentUserName() }}
+<button (click)="login('admin', '12345')">login as admin</button>
+<button (click)="login('admin', '123453123')">invalid login</button>
+<button (click)="login('', '')">empty login</button>
+<button (click)="logout()">logout</button>
+
+<p>{{ serverErrors() }}</p>
