@@ -1,6 +1,10 @@
 export type Role = 'Unknown' | 'Admin' | 'User';
 
-export type Permission = 'AdminPanel' | 'RegisterAdmin' | 'Dashboard' | 'RoomsView' | 'RoomsEdit';
+export type Permission = 'AdminPanel' | 'RegisterAdmin' | 
+                         'Dashboard' | 'RoomsView' | 'RoomsEdit' |
+                         'DevicesView' | 'DevicesEdit' |
+                         'ScenesView' | 'ScenesEdit' |
+                         'Automation' | 'Energy';
 
 export class AuthData
 {

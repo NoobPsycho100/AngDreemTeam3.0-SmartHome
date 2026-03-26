@@ -1,10 +1,11 @@
 import { Component, Signal, signal, WritableSignal } from '@angular/core';
+import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
 
 export type MenuState = 'normal' | 'collapsed' | 'hidden';
 
 @Component({
   selector: 'app-menu',
-  imports: [],
+  imports: [AppIfHasPermission],
   templateUrl: './menu.html',
   styleUrl: './menu.less'
 })

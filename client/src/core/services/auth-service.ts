@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { map, Observable } from 'rxjs';
 import { LoginRequest } from '../models/requests/login-request';
 import { OkResult, Response, ValidationErrorResult } from '../models/response';
-import { AuthData, Unauthorized } from '../models/domain/auth';
+import { AuthData, Unauthorized } from '../domain/auth';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
@@ -12,6 +13,7 @@ export class AuthService
 
     private readonly _currentAuthData: WritableSignal<AuthData> = signal(Unauthorized);
     public readonly currentAuthData: Signal<AuthData> = this._currentAuthData.asReadonly();
+    public readonly currentAuthChange: Observable<AuthData> = toObservable(this.currentAuthData);
 
     private setCurrentUser(token: string)
     {
