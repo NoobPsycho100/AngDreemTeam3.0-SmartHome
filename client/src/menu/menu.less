@@ -1,0 +1,114 @@
+@import (reference) "../palette.less";
+
+.menu-item
+{
+    cursor: pointer;
+}
+
+//#region palette:
+
+#logo, .menu-item
+{
+    background: @block-background;
+    color: @block-color;
+}
+
+.menu-item:hover, .menu-item.selected
+{
+    background: @selected-background;
+    color: @selected-text-color;
+}
+
+//#endregion palette:
+
+//#region sizing:
+
+#logo
+{
+    display: block;
+    margin: 0px 15px;
+    height: @header-height;
+    overflow: hidden;
+    max-height: @header-height;
+    
+    span
+    {
+        margin-left: 10px;
+        font-size: 24px;
+        text-align: center;
+        display: block;
+        height: @header-height;
+        overflow: hidden;
+        max-height: @header-height;
+    }
+
+    img.icon
+    {
+        width: 48px;
+        height: 48px;
+        margin: 16px 10px 16px 0;
+        float: left;
+    }
+}
+
+.hidden #logo img.icon
+{
+    cursor: pointer;
+}
+
+.menu-item
+{
+    border-radius: 5px;
+    display: block;
+    margin: 5px 15px;
+    padding: 5px 10px;
+    max-height: 23px;
+    overflow: hidden;
+
+    span
+    {
+        margin-left: 40px;
+        font-size: 20px;
+        display: block;
+        overflow: hidden;
+    }
+
+    img.icon
+    {
+        float: left;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+#hide-buttons
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: all 1s ease-in-out;
+}
+
+.hidden #hide-buttons
+{
+    width: 0;
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+}
+
+.normal #hide-buttons #hide-button
+{
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: all 1s ease-in-out;
+}
+
+.collapsed #hide-buttons #hide-button
+{
+    height: 32px;
+    padding: auto;
+    transition: all 1s ease-in-out;
+}
+
+//#endregion sizing
