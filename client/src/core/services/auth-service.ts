@@ -6,6 +6,7 @@ import { map, Observable } from 'rxjs';
 import { LoginRequest } from '../models/requests/login-request';
 import { OkResult, Response, ValidationErrorResult } from '../models/response';
 import { AuthData, Unauthorized } from '../domain/auth';
+import { RegisterRequest } from '../models/requests/register-request';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
@@ -41,10 +42,27 @@ export class AuthService
         return new AuthData(userData.Login, token, userData.Roles, userData.Permissions);
     }
 
-    public login(login: LoginRequest): Observable<Response<OkResult>>
+    public login(model: LoginRequest): Observable<Response<OkResult>>
     {
         // TODO: move https://localhost:7086 to settings
-        return this.http.post<Response<OkResult>>('https://localhost:7086/api/auth/login', login, { observe: 'response' })
+        return this.http.post<Response<OkResult>>('https://localhost:7086/api/auth/login', model, { observe: 'response' })
+            .pipe(map(response => {
+                if (response.body instanceof ValidationErrorResult)
+                    return response.body;
+
+                var token = response.headers.get('x-auth-token');
+                if (token == null)
+                    return new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]);
+
+                this.setCurrentUser(token);
+                return new OkResult();
+            }));
+    }
+
+    public register(model: RegisterRequest): Observable<Response<OkResult>>
+    {
+        // TODO: move https://localhost:7086 to settings
+        return this.http.post<Response<OkResult>>('https://localhost:7086/api/auth/register', model, { observe: 'response' })
             .pipe(map(response => {
                 if (response.body instanceof ValidationErrorResult)
                     return response.body;

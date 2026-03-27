@@ -1,14 +1,37 @@
 <dialog #loginDialog>
+    <div id="method-selector">
+        <a (click)="loginMode.set('login')">Login</a>
+        <a (click)="loginMode.set('register')">Register</a>
+    </div>
+    @if (loginMode() == 'login')
+    {
     <div id="login">
         <h2>Log In</h2>
         <p>Login</p>
         <input type="text" [formField]="loginForm.login" />
-        <server-validation-error [serverErrors]="serverErrors()" [forField]="'login'" />
+        <server-validation-error [serverErrors]="loginServerErrors()" [forField]="'login'" />
         <p>Password</p>
         <input type="password" [formField]="loginForm.password" />
-        <server-validation-error [serverErrors]="serverErrors()" [forField]="'password'" />
+        <server-validation-error [serverErrors]="loginServerErrors()" [forField]="'password'" />
 
         <p><button type="submit" (click)="login()">Log In</button></p>
     </div>
+    }
+    @if (loginMode() == 'register')
+    {
+    <div id="register">
+        <h2>Register</h2>
+        <p>Login</p>
+        <input type="text" [formField]="registerForm.login" />
+        <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'login'" />
+        <p>Password</p>
+        <input type="password" [formField]="registerForm.password" />
+        <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'password'" />
+        <p>Confirm Password</p>
+        <input type="password" [formField]="registerForm.confirmPassword" />
+
+        <p><button type="submit" (click)="register()">Register</button></p>
+    </div>
+    }
     <p><button (click)="closeDialog()">Close</button></p>
 </dialog>
