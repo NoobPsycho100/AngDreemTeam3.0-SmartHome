@@ -13,24 +13,37 @@ export class AuthService
     private http = inject(HttpClient);
     private router = inject(Router);
 
-    private readonly _currentAuthData: WritableSignal<AuthData> = signal(Unauthorized);
+    private readonly localAuthKey = 'local-auth';
+    private readonly _currentAuthData: WritableSignal<AuthData> = signal(this.getCurrentAuthFromToken(localStorage.getItem(this.localAuthKey)));
     public readonly currentAuthData: Signal<AuthData> = this._currentAuthData.asReadonly();
     public readonly currentAuthChange: Observable<AuthData> = toObservable(this.currentAuthData);
+    // TODO: request to server for user data (not auth data - i.e. photo, real name or whatever)
 
     private setCurrentUser(token: string)
     {
-        let tokenData = atob(token.split('.')[1]);
-        let userData = JSON.parse(tokenData);
-
-        let user = new AuthData(userData.Login, token, userData.Roles, userData.Permissions);
+        let user = this.getCurrentAuthFromToken(token);
         this._currentAuthData.set(user);
+
+        localStorage.setItem(this.localAuthKey, token);
         
         // Angular will not re-check route guards
         this.router.navigateByUrl('');
     }
 
+    private getCurrentAuthFromToken(token: string | null): AuthData
+    {
+        if (!token)
+            return Unauthorized;
+
+        let tokenData = atob(token.split('.')[1]);
+        let userData = JSON.parse(tokenData);
+
+        return new AuthData(userData.Login, token, userData.Roles, userData.Permissions);
+    }
+
     public login(login: LoginRequest): Observable<Response<OkResult>>
     {
+        // TODO: move https://localhost:7086 to settings
         return this.http.post<Response<OkResult>>('https://localhost:7086/api/auth/login', login, { observe: 'response' })
             .pipe(map(response => {
                 if (response.body instanceof ValidationErrorResult)
