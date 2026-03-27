@@ -1,7 +1,7 @@
 @if (!isAuthorized())
 {
     <div style="float: right;">
-        <button (click)="showLoginModal()">Login or register</button>
+        <button (click)="showLoginModal('login')">Login or register</button>
     </div>
 }
 @else
@@ -9,6 +9,7 @@
     <div style="float: right;">
         Logged as {{ currentUserName() }}
         <button (click)="logout()">logout</button>
+        <button (click)="showLoginModal('register-as-admin')" *appIfHasPermission="'RegisterAdmin'">Register another</button>
     </div>
 }
 

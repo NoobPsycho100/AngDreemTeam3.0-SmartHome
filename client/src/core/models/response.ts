@@ -10,5 +10,3 @@ export class ValidationErrorResult
 }
 
 export const NullValidationErrorResult: ValidationErrorResult = new ValidationErrorResult([]);
-
-export type Response<TResponse> = TResponse | ValidationErrorResult;

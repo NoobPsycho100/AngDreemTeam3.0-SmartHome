@@ -4,5 +4,5 @@ namespace SmartHome.Web.Model;
 
 public class AdminRegisterRequest: RegisterRequest
 {
-    public Role[] Roles { get; set; }
+    public Role[] Roles { get; set; } = [];
 }

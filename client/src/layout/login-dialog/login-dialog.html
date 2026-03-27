@@ -2,6 +2,7 @@
     <div id="method-selector">
         <a (click)="loginMode.set('login')">Login</a>
         <a (click)="loginMode.set('register')">Register</a>
+        <a (click)="loginMode.set('register-as-admin')" *appIfHasPermission="'RegisterAdmin'">Register as Admin</a>
     </div>
     @if (loginMode() == 'login')
     {
@@ -31,6 +32,23 @@
         <input type="password" [formField]="registerForm.confirmPassword" />
 
         <p><button type="submit" (click)="register()">Register</button></p>
+    </div>
+    }
+    @if (loginMode() == 'register-as-admin')
+    {
+    <div id="register-as-admin" *appIfHasPermission="'RegisterAdmin'">
+        <h2>Register as admin</h2>
+        <p>Login</p>
+        <input type="text" [formField]="registerAsAdminForm.login" />
+        <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'login'" />
+        <p>Password</p>
+        <input type="password" [formField]="registerAsAdminForm.password" />
+        <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'password'" />
+        <p>Confirm Password</p>
+        <input type="password" [formField]="registerAsAdminForm.confirmPassword" />
+        <input id="loginAsNew" type="checkbox" [formField]="registerAsAdminForm.loginAsNewUser" /><label for="loginAsNewUser">login as new user</label>
+
+        <p><button type="submit" (click)="registerAsAdmin()">Register as admin</button></p>
     </div>
     }
     <p><button (click)="closeDialog()">Close</button></p>

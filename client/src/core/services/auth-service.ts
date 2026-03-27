@@ -1,9 +1,10 @@
-import { AuthService as ApiAuthService, LoginRequest, RegisterRequest } from '../../api/generated';
+import { AuthService as ApiAuthService } from '../../api/generated/services';
+import { AdminRegisterRequest, LoginRequest, RegisterRequest } from '../../api/generated/models';
 import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { map, Observable, throwError } from 'rxjs';
-import { OkResult, Response, ValidationErrorResult } from '../models/response';
+import { OkResult, ValidationErrorResult } from '../models/response';
 import { AuthData, Unauthorized } from '../domain/auth';
 
 @Injectable({providedIn: 'root'})
@@ -63,6 +64,38 @@ export class AuthService
                 this.setCurrentUser(token);
                 return new OkResult();
             }));
+    }
+
+    public registerAsAdmin(model: AdminRegisterRequest, loginAsNewUser: boolean): Observable<OkResult>
+    {
+        return this.apiAuthService.apiAuthRegisterAdminPost(model, 'response')
+            .pipe(map(response => {
+                let token = response.headers.get('x-auth-token');
+                if (token == null)
+                    return throwError(new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]));
+
+                if (loginAsNewUser)
+                    this.setCurrentUser(token);
+                return new OkResult();
+            }));
+    }
+
+    public refreshToken(): Observable<OkResult>
+    {
+        return this.apiAuthService.apiAuthRefreshPost('response')
+            .pipe(map(response => {
+                let token = response.headers.get('x-auth-token');
+                if (token == null)
+                    return throwError(new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]));
+
+                this.setCurrentUser(token);
+                return new OkResult();
+            }));
+    }
+
+    public checkIsLoginFree(login: string): Observable<boolean>
+    {
+        return this.apiAuthService.apiAuthCheckLoginGet(login, 'body');
     }
 
     public logout()

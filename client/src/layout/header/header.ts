@@ -1,10 +1,11 @@
 import { Component, computed, inject, viewChild } from '@angular/core';
 import { AuthService } from '../../core/services/auth-service';
-import { LoginDialog } from '../login-dialog/login-dialog';
+import { LoginDialog, LoginMode } from '../login-dialog/login-dialog';
+import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
 
 @Component({
     selector: 'app-header',
-    imports: [LoginDialog],
+    imports: [LoginDialog, AppIfHasPermission],
     templateUrl: './header.html',
     styleUrl: './header.less'
 })
@@ -22,8 +23,8 @@ export class Header
         this.authService.logout();
     }
 
-    protected showLoginModal()
+    protected showLoginModal(mode: LoginMode)
     {
-        this.loginDialog()?.showDialog();
+        this.loginDialog()?.showDialog(mode);
     }
 }
