@@ -1,9 +1,15 @@
-{{ currentUserName() }}
-<button (click)="login('admin', '12345')">login as admin</button>
-<button (click)="login('NoobPsycho', '123456')">login as user</button>
-<button (click)="login('NoobPsycho100', '123456')">login as admin and user</button>
-<button (click)="login('admin', '123453123')">invalid login</button>
-<button (click)="login('', '')">empty login</button>
-<button (click)="logout()">logout</button>
+@if (!isAuthorized())
+{
+    <div style="float: right;">
+        <button (click)="showLoginModal()">Login or register</button>
+    </div>
+}
+@else
+{
+    <div style="float: right;">
+        Logged as {{ currentUserName() }}
+        <button (click)="logout()">logout</button>
+    </div>
+}
 
-<p>{{ serverErrors() }}</p>
+<login-dialog #loginDialog />

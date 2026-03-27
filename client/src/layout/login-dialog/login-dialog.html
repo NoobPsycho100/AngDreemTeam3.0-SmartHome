@@ -1,0 +1,14 @@
+<dialog #loginDialog>
+    <div id="login">
+        <h2>Log In</h2>
+        <p>Login</p>
+        <input type="text" [formField]="loginForm.login" />
+        <server-validation-error [serverErrors]="serverErrors()" [forField]="'login'" />
+        <p>Password</p>
+        <input type="password" [formField]="loginForm.password" />
+        <server-validation-error [serverErrors]="serverErrors()" [forField]="'password'" />
+
+        <p><button type="submit" (click)="login()">Log In</button></p>
+    </div>
+    <p><button (click)="closeDialog()">Close</button></p>
+</dialog>

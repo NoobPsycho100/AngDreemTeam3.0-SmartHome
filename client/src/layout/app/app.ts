@@ -4,12 +4,12 @@ import { Header } from '../header/header';
 import { Menu } from '../menu/menu';
 
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet, Header, Menu],
-  templateUrl: './app.html',
-  styleUrl: './app.less'
+    selector: 'app-root',
+    imports: [RouterOutlet, Header, Menu],
+    templateUrl: './app.html',
+    styleUrl: './app.less'
 })
 export class App {
-  private menu = viewChild(Menu);
-  protected menuState = computed(() => this.menu()?.menuState());
+    private menu = viewChild(Menu);
+    protected menuState = computed(() => this.menu()?.menuState());
 }

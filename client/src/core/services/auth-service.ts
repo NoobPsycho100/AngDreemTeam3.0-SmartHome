@@ -61,6 +61,7 @@ export class AuthService
     public logout()
     {
         this._currentAuthData.set(Unauthorized);
+        localStorage.removeItem(this.localAuthKey);
         
         // Angular will not re-check route guards
         this.router.navigateByUrl('');
