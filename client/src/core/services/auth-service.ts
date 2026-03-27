@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { Router } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { map, Observable } from 'rxjs';
 import { LoginRequest } from '../models/requests/login-request';
@@ -10,6 +11,7 @@ import { AuthData, Unauthorized } from '../domain/auth';
 export class AuthService
 {
     private http = inject(HttpClient);
+    private router = inject(Router);
 
     private readonly _currentAuthData: WritableSignal<AuthData> = signal(Unauthorized);
     public readonly currentAuthData: Signal<AuthData> = this._currentAuthData.asReadonly();
@@ -21,8 +23,10 @@ export class AuthService
         let userData = JSON.parse(tokenData);
 
         let user = new AuthData(userData.Login, token, userData.Roles, userData.Permissions);
-
         this._currentAuthData.set(user);
+        
+        // Angular will not re-check route guards
+        this.router.navigateByUrl('');
     }
 
     public login(login: LoginRequest): Observable<Response<OkResult>>
@@ -44,5 +48,8 @@ export class AuthService
     public logout()
     {
         this._currentAuthData.set(Unauthorized);
+        
+        // Angular will not re-check route guards
+        this.router.navigateByUrl('');
     }
 };

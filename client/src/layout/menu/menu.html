@@ -4,13 +4,34 @@
     </div>
 
     <div id="menu">
-        <a class="menu-item" *appIfHasPermission="'Dashboard'"><img class="icon" src="icons/menu/dashboard.png" /><span>Dashboard</span></a>
-        <a class="menu-item" *appIfHasPermission="'RoomsView'"><img class="icon" src="icons/menu/rooms.png" /><span>Rooms</span></a>
-        <a class="menu-item" *appIfHasPermission="'DevicesView'"><img class="icon" src="icons/menu/devices.png" /><span>Devices</span></a>
-        <a class="menu-item" *appIfHasPermission="'ScenesView'"><img class="icon" src="icons/menu/scenes.png" /><span>Scenes</span></a>
-        <a class="menu-item" *appIfHasPermission="'Automation'"><img class="icon" src="icons/menu/automation.png" /><span>Automation</span></a>
-        <a class="menu-item" *appIfHasPermission="'Energy'"><img class="icon" src="icons/menu/energy.png" /><span>Energy</span></a>
-        <a class="menu-item" *appIfHasPermission="'AdminPanel'"><img class="icon" src="icons/menu/settings.png" /><span>Settings</span></a>
+        <a class="menu-item" *appIfHasPermission="'Dashboard'"
+           routerLink="/dashboard">
+            <img class="icon" src="icons/menu/dashboard.png" /><span>Dashboard</span>
+        </a>
+        <a class="menu-item" *appIfHasPermission="'RoomsView'"
+           routerLink="/rooms">
+            <img class="icon" src="icons/menu/rooms.png" /><span>Rooms</span>
+        </a>
+        <a class="menu-item" *appIfHasPermission="'DevicesView'"
+           routerLink="/devices">
+            <img class="icon" src="icons/menu/devices.png" /><span>Devices</span>
+        </a>
+        <a class="menu-item" *appIfHasPermission="'ScenesView'"
+           routerLink="/scenes">
+            <img class="icon" src="icons/menu/scenes.png" /><span>Scenes</span>
+        </a>
+        <a class="menu-item" *appIfHasPermission="'Automation'"
+           routerLink="/automation">
+            <img class="icon" src="icons/menu/automation.png" /><span>Automation</span>
+        </a>
+        <a class="menu-item" *appIfHasPermission="'Energy'"
+           routerLink="/energy">
+            <img class="icon" src="icons/menu/energy.png" /><span>Energy</span>
+        </a>
+        <a class="menu-item" *appIfHasPermission="'AdminPanel'"
+           routerLink="/settings">
+            <img class="icon" src="icons/menu/settings.png" /><span>Settings</span>
+        </a>
     </div>
 
     <div id="hide-buttons">
