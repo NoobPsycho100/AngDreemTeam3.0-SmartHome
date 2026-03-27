@@ -1,12 +1,16 @@
-import { Component, computed, ElementRef, HostListener, inject, input, model, signal, viewChild, ViewChild, WritableSignal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, model, signal, viewChild, WritableSignal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
-import { LoginRequest } from '../../core/models/requests/login-request';
 import { AuthService } from '../../core/services/auth-service';
 import { NullValidationErrorResult, ValidationErrorResult } from '../../core/models/response';
 import { ServerValidationErrors } from '../../shared/components/server-validation-error';
-import { RegisterRequest } from '../../core/models/requests/register-request';
+import { LoginRequest, RegisterRequest } from '../../api/generated';
 
 export type LoginMode = 'login' | 'register';
+
+interface RegisterRequestWithConfirm extends RegisterRequest
+{
+    confirmPassword: string
+}
 
 @Component({
     selector: 'login-dialog',
@@ -28,7 +32,7 @@ export class LoginDialog
     private loginModel = signal<LoginRequest>({login: '', password: ''});
     protected loginForm = form(this.loginModel);
 
-    private registerModel = signal<RegisterRequest>({login: '', password: '', confirmPassword: ''});
+    private registerModel = signal<RegisterRequestWithConfirm>({login: '', password: '', confirmPassword: ''});
     protected registerForm = form(this.registerModel);
 
     public showDialog()
@@ -50,28 +54,24 @@ export class LoginDialog
     protected login()
     {
         this.authService.login(this.loginModel())
-            .subscribe(x => {
-                if (x instanceof ValidationErrorResult)
-                    this.loginServerErrors.set(x);
-                else
-                {
-                    this.loginServerErrors.set(NullValidationErrorResult);
-                    this.closeDialog();
-                }
+            .subscribe(() => {
+                this.loginServerErrors.set(NullValidationErrorResult);
+                this.closeDialog();
+            }, error => {
+                if (error instanceof ValidationErrorResult)
+                    this.loginServerErrors.set(error);
             });
     }
 
     protected register()
     {
         this.authService.register(this.registerModel())
-            .subscribe(x => {
-                if (x instanceof ValidationErrorResult)
-                    this.registerServerErrors.set(x);
-                else
-                {
-                    this.registerServerErrors.set(NullValidationErrorResult);
-                    this.closeDialog();
-                }
+            .subscribe(() => {
+                this.registerServerErrors.set(NullValidationErrorResult);
+                this.closeDialog();
+            }, error => {
+                if (error instanceof ValidationErrorResult)
+                    this.registerServerErrors.set(error);
             });
     }
 }

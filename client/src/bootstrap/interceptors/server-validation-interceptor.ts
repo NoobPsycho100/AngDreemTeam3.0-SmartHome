@@ -31,8 +31,7 @@ export class ServerValidationInterceptor implements HttpInterceptor
 
                 let validationResult = new ValidationErrorResult(validationErrors);
 
-
-                return of(new HttpResponse({ status: 200, body: validationResult }));
+                return throwError(validationResult);
             }));
     }
 }

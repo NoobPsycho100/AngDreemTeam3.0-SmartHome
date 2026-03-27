@@ -2,13 +2,13 @@
 using SmartHome.Core.Services;
 using SmartHome.Web.Model;
 
-namespace SmartHome.Web.Validation;
+namespace SmartHome.Web.Validation.Login;
 
-public class RegisterValidator : AbstractValidator<RegisterReguest>
+public class AdminRegisterValidator: AbstractValidator<AdminRegisterRequest>
 {
     private readonly ILoginService _loginService;
 
-    public RegisterValidator(ILoginService loginService)
+    public AdminRegisterValidator(ILoginService loginService)
     {
         _loginService = loginService;
 

@@ -1,24 +1,21 @@
-import { HttpClient } from '@angular/common/http';
+import { AuthService as ApiAuthService, LoginRequest, RegisterRequest } from '../../api/generated';
 import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { map, Observable } from 'rxjs';
-import { LoginRequest } from '../models/requests/login-request';
+import { map, Observable, throwError } from 'rxjs';
 import { OkResult, Response, ValidationErrorResult } from '../models/response';
 import { AuthData, Unauthorized } from '../domain/auth';
-import { RegisterRequest } from '../models/requests/register-request';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
 {
-    private http = inject(HttpClient);
+    private apiAuthService = inject(ApiAuthService);
     private router = inject(Router);
 
     private readonly localAuthKey = 'local-auth';
     private readonly _currentAuthData: WritableSignal<AuthData> = signal(this.getCurrentAuthFromToken(localStorage.getItem(this.localAuthKey)));
     public readonly currentAuthData: Signal<AuthData> = this._currentAuthData.asReadonly();
     public readonly currentAuthChange: Observable<AuthData> = toObservable(this.currentAuthData);
-    // TODO: request to server for user data (not auth data - i.e. photo, real name or whatever)
 
     private setCurrentUser(token: string)
     {
@@ -42,34 +39,26 @@ export class AuthService
         return new AuthData(userData.Login, token, userData.Roles, userData.Permissions);
     }
 
-    public login(model: LoginRequest): Observable<Response<OkResult>>
+    public login(model: LoginRequest): Observable<OkResult>
     {
-        // TODO: move https://localhost:7086 to settings
-        return this.http.post<Response<OkResult>>('https://localhost:7086/api/auth/login', model, { observe: 'response' })
+        return this.apiAuthService.apiAuthLoginPost(model, 'response')
             .pipe(map(response => {
-                if (response.body instanceof ValidationErrorResult)
-                    return response.body;
-
-                var token = response.headers.get('x-auth-token');
+                let token = response.headers.get('x-auth-token');
                 if (token == null)
-                    return new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]);
+                    return throwError(new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]));
 
                 this.setCurrentUser(token);
                 return new OkResult();
             }));
     }
 
-    public register(model: RegisterRequest): Observable<Response<OkResult>>
+    public register(model: RegisterRequest): Observable<OkResult>
     {
-        // TODO: move https://localhost:7086 to settings
-        return this.http.post<Response<OkResult>>('https://localhost:7086/api/auth/register', model, { observe: 'response' })
+        return this.apiAuthService.apiAuthRegisterPost(model, 'response')
             .pipe(map(response => {
-                if (response.body instanceof ValidationErrorResult)
-                    return response.body;
-
-                var token = response.headers.get('x-auth-token');
+                let token = response.headers.get('x-auth-token');
                 if (token == null)
-                    return new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]);
+                    return throwError(new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]));
 
                 this.setCurrentUser(token);
                 return new OkResult();

@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
 
     [Route("login")]
     [HttpPost]
-    public async Task<ActionResult> Login([FromBody] LoginReguest request)
+    public async Task<ActionResult> Login([FromBody] LoginRequest request)
     {
         if (!await _loginService.ValidateLogin(request.Login, request.Password))
             return Unauthorized();
@@ -51,7 +51,7 @@ public class AuthController : ControllerBase
 
     [Route("register")]
     [HttpPost]
-    public async Task<ActionResult> RegisterUser([FromBody] RegisterReguest request)
+    public async Task<ActionResult> RegisterUser([FromBody] RegisterRequest request)
     {
         if (!await _loginService.IsLoginFree(request.Login))
             return Unauthorized();
@@ -63,14 +63,13 @@ public class AuthController : ControllerBase
 
     [Route("register-admin")]
     [HttpPost]
-    //[Authorize]
     [AuthPermission(Permission.RegisterAdmin)]
-    public async Task<ActionResult> RegisterAdmin([FromBody] RegisterReguest request)
+    public async Task<ActionResult> RegisterAdmin([FromBody] AdminRegisterRequest request)
     {
         if (!await _loginService.IsLoginFree(request.Login))
             return Unauthorized();
 
-        await _loginService.Register(request.Login, request.Password, _authService.GetCurrentUser(), Role.Admin);
+        await _loginService.Register(request.Login, request.Password, _authService.GetCurrentUser(), request.Roles);
 
         return await ReturnAuthToken(request.Login);
     }

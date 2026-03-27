@@ -5,7 +5,7 @@ using SmartHome.Data.Mock.MockedData;
 using SmartHome.Data.Mock.Services;
 using SmartHome.Web.Auth;
 using SmartHome.Web.Model;
-using SmartHome.Web.Validation;
+using SmartHome.Web.Validation.Login;
 
 namespace SmartHome.Web;
 
@@ -28,7 +28,8 @@ public static class DI
 
     private static void RegisterValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<LoginReguest>, LoginValidator>();
-        services.AddScoped<IValidator<RegisterReguest>, RegisterValidator>();
+        services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
+        services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
+        services.AddScoped<IValidator<AdminRegisterRequest>, AdminRegisterValidator>();
     }
 }

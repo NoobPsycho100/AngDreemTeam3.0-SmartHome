@@ -34,10 +34,10 @@ builder.Services.AddControllers(options =>
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(options =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartHome api", Version = "v1" });
-    c.AddSecurityDefinition(
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartHome api", Version = "v1" });
+    options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
                     {
@@ -50,7 +50,8 @@ builder.Services.AddSwaggerGen(c =>
                     }
                 );
 
-    c.AddSecurityRequirement(document => new() { [new OpenApiSecuritySchemeReference("Bearer", document)] = [] });
+    options.AddSecurityRequirement(document => new() { [new OpenApiSecuritySchemeReference("Bearer", document)] = [] });
+    options.SupportNonNullableReferenceTypes();
 });
 
 builder.Services.RegisterCustomDependencies(builder.Configuration);

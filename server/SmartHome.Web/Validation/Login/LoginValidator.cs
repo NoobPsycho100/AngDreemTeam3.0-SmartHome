@@ -2,9 +2,9 @@
 using SmartHome.Core.Services;
 using SmartHome.Web.Model;
 
-namespace SmartHome.Web.Validation;
+namespace SmartHome.Web.Validation.Login;
 
-public class LoginValidator: AbstractValidator<LoginReguest>
+public class LoginValidator: AbstractValidator<LoginRequest>
 {
     private readonly ILoginService _loginService;
 
@@ -17,6 +17,6 @@ public class LoginValidator: AbstractValidator<LoginReguest>
         RuleFor(x => x.Password).NotEmpty().WithMessage("Password field should not be empty");
 
         RuleFor(x => x).MustAsync(async (x, cancellation) => string.IsNullOrEmpty(x.Login) || await _loginService.ValidateLogin(x.Login, x.Password))
-                       .WithName(nameof(LoginReguest.Login)).WithMessage("Incorrect login or password");
+                       .WithName(nameof(LoginRequest.Login)).WithMessage("Incorrect login or password");
     }
 }
