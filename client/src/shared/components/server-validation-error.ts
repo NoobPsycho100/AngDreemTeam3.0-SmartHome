@@ -1,13 +1,17 @@
-import { Component, computed, input } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { Component, computed, Input, input, TemplateRef } from '@angular/core';
 import { ValidationErrorResult } from '../../core/models/response';
 
 @Component({
     selector: 'server-validation-error',
     templateUrl: './server-validation-error.html',
-    imports: []
+    imports: [NgTemplateOutlet]
 })
 export class ServerValidationErrors
 {
+    @Input()
+    public errorTemplate!: TemplateRef<any>;
+
     public readonly serverErrors = input.required<ValidationErrorResult>();
     public readonly forField = input<string>();
     
@@ -17,6 +21,6 @@ export class ServerValidationErrors
         
         let shownErrors = errors.validationErrors.filter(x => !field || x.key.toUpperCase() == field.toUpperCase()).map(x => x.error);
         
-        return shownErrors.join('<br/>');
+        return shownErrors;
     });
 }
