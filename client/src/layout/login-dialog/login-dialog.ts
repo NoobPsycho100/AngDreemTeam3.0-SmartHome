@@ -2,30 +2,42 @@ import { Component, ElementRef, HostListener, inject, model, signal, viewChild, 
 import { form, FormField, minLength, required, validate } from '@angular/forms/signals';
 import { AuthService } from '../../core/services/auth-service';
 import { NullValidationErrorResult, ValidationErrorResult } from '../../core/models/response';
-import { AdminRegisterRequest, LoginRequest, RegisterRequest } from '../../api/generated/models';
+import { AdminRegisterRequest, LoginRequest, RegisterRequest, Role } from '../../api/generated/models';
 import { ServerValidationErrors } from '../../shared/components/server-validation-error';
 import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
 import { ClientValidationErrors } from '../../shared/components/client-validation-error';
-import { SpinnablePanel } from '../../shared/components/spinnablePanel';
+import { SpinnablePanel } from '../../shared/components/spinnable-panel';
+import { MultiTagsSelector } from '../../shared/components/multi-tags-selector';
 
 export type LoginMode = 'login' | 'register' | 'register-as-admin';
 
-interface RegisterRequestWithConfirm extends RegisterRequest
+interface LoginRequestModel
 {
-    confirmPassword: string
+    login: string;
+    password: string;
 }
 
-interface RegisterAsAdminRequestWithConfirm extends AdminRegisterRequest
+interface RegisterRequestModel
 {
-    confirmPassword: string,
-    loginAsNewUser: boolean
+    login: string;
+    password: string;
+    confirmPassword: string;
+}
+
+interface RegisterAsAdminRequestModel
+{
+    login: string;
+    password: string;
+    roles: Array<Role>;
+    confirmPassword: string;
+    loginAsNewUser: boolean;
 }
 
 @Component({
     selector: 'login-dialog',
     templateUrl: './login-dialog.html',
     styleUrl: './login-dialog.less',
-    imports: [FormField, ServerValidationErrors, ClientValidationErrors, AppIfHasPermission, SpinnablePanel]
+    imports: [FormField, ServerValidationErrors, ClientValidationErrors, AppIfHasPermission, SpinnablePanel, MultiTagsSelector]
 })
 export class LoginDialog
 {
@@ -40,7 +52,7 @@ export class LoginDialog
     protected readonly loginServerErrors: WritableSignal<ValidationErrorResult> = signal(NullValidationErrorResult);
     protected readonly loginSpinner: WritableSignal<boolean> = signal(false);
 
-    private loginModel = signal<LoginRequest>({login: '', password: ''});
+    private loginModel = signal<LoginRequestModel>({login: '', password: ''});
     protected loginForm = form(this.loginModel, (schema) => {
         required(schema.login, {message: 'Login is required'});
         required(schema.password, {message: 'Password is required'});
@@ -52,6 +64,7 @@ export class LoginDialog
             return;
 
         this.loginSpinner.set(true);
+        let request: LoginRequest = {login: this.loginModel().login, password: this.loginModel().password};
         this.authService.login(this.loginModel())
             .subscribe(() => {
                 this.loginServerErrors.set(NullValidationErrorResult);
@@ -71,7 +84,7 @@ export class LoginDialog
     protected readonly registerServerErrors: WritableSignal<ValidationErrorResult> = signal(NullValidationErrorResult);
     protected readonly registerSpinner: WritableSignal<boolean> = signal(false);
 
-    private registerModel = signal<RegisterRequestWithConfirm>({login: '', password: '', confirmPassword: ''});
+    private registerModel = signal<RegisterRequestModel>({login: '', password: '', confirmPassword: ''});
     protected registerForm = form(this.registerModel, (schema) => {
         required(schema.login, {message: 'Login is required'});
         required(schema.password, {message: 'Password is required'});
@@ -94,7 +107,7 @@ export class LoginDialog
             return;
 
         this.registerSpinner.set(true);
-        let request: RegisterRequest = {login: this.registerAsAdminModel().login, password: this.registerAsAdminModel().password};
+        let request: RegisterRequest = {login: this.registerModel().login, password: this.registerModel().password};
         this.authService.register(this.registerModel())
             .subscribe(() => {
                 this.registerServerErrors.set(NullValidationErrorResult);
@@ -114,8 +127,9 @@ export class LoginDialog
 
     protected readonly registerAsAdminServerErrors: WritableSignal<ValidationErrorResult> = signal(NullValidationErrorResult);
     protected readonly registerAsAdminSpinner: WritableSignal<boolean> = signal(false);
+    protected readonly allowedRoles = signal([Role.Admin, Role.User])
 
-    private registerAsAdminModel = signal<RegisterAsAdminRequestWithConfirm>({login: '', password: '', confirmPassword: '', loginAsNewUser: false});
+    private registerAsAdminModel = signal<RegisterAsAdminRequestModel>({login: '', password: '', confirmPassword: '', roles: ['Admin'], loginAsNewUser: false});
     protected registerAsAdminForm = form(this.registerAsAdminModel, (schema) => {
         required(schema.login, {message: 'Login is required'});
         required(schema.password, {message: 'Password is required'});
@@ -130,6 +144,15 @@ export class LoginDialog
                 };
             return null;
         });
+        validate(schema.roles, ({value}) => {
+            const roles = value();
+            if (roles.length == 0)
+                return {
+                    kind: 'empty',
+                    message: 'Please select at least one role',
+                };
+            return null;
+        });
     });
 
     protected registerAsAdmin()
@@ -138,7 +161,7 @@ export class LoginDialog
             return;
 
         this.registerAsAdminSpinner.set(true);
-        let request: AdminRegisterRequest = {login: this.registerAsAdminModel().login, password: this.registerAsAdminModel().password, roles: ['Admin']};
+        let request: AdminRegisterRequest = {login: this.registerAsAdminModel().login, password: this.registerAsAdminModel().password, roles: this.registerAsAdminModel().roles};
         this.authService.registerAsAdmin(request, this.registerAsAdminModel().loginAsNewUser)
             .subscribe(() => {
                 this.registerAsAdminServerErrors.set(NullValidationErrorResult);

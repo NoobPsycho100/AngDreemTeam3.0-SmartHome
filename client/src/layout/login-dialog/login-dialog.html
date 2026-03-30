@@ -81,6 +81,12 @@
                 <client-validation-error [fieldState]="registerAsAdminForm.confirmPassword()" [errorTemplate]="errorTemplate" />
             </p>
             <p>
+                <span>Roles</span>
+                <multi-tags-selector [formField]="registerAsAdminForm.roles" [allowedTags]="allowedRoles()" [allowCustomTags]="false" />
+                <client-validation-error [fieldState]="registerAsAdminForm.roles()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'roles'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
                 <input id="loginAsNewUser" type="checkbox" [formField]="registerAsAdminForm.loginAsNewUser" />
                 <label for="loginAsNewUser">login as new user</label>
             </p>
