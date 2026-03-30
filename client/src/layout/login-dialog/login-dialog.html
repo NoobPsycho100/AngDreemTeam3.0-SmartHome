@@ -8,83 +8,88 @@
     </div>
     @if (loginMode() == 'login')
     {
-    <div id="login">
-        <h2>Log In</h2>
-        <p>
-            <span>Login</span>
-            <input type="text" [formField]="loginForm.login" />
-            <client-validation-error [fieldState]="loginForm.login()" [errorTemplate]="errorTemplate" />
-            <server-validation-error [serverErrors]="loginServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
-        </p>
-        <p>
-            <span>Password</span>
-            <input type="password" [formField]="loginForm.password" />
-            <client-validation-error [fieldState]="loginForm.password()" [errorTemplate]="errorTemplate" />
-            <server-validation-error [serverErrors]="loginServerErrors()" [forField]="'password'" [errorTemplate]="errorTemplate" />
-        </p>
-
-        <p>
-            <button type="submit" (click)="login()">Log In</button>
-        </p>
-    </div>
+    <spinnable-panel [showSpinner]="loginSpinner()">
+        <div id="login">
+            <h2>Log In</h2>
+            <p>
+                <span>Login</span>
+                <input type="text" [formField]="loginForm.login" />
+                <client-validation-error [fieldState]="loginForm.login()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="loginServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <span>Password</span>
+                <input type="password" [formField]="loginForm.password" />
+                <client-validation-error [fieldState]="loginForm.password()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="loginServerErrors()" [forField]="'password'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <button type="submit" (click)="login()">Log In</button>
+            </p>
+        </div>
+    </spinnable-panel>
     }
     @if (loginMode() == 'register')
     {
-    <div id="register">
-        <h2>Register</h2>
-        <p>
-            <span>Login</span>
-            <input type="text" [formField]="registerForm.login" />
-            <client-validation-error [fieldState]="registerForm.login()" [errorTemplate]="errorTemplate" />
-            <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
-        </p>
-        <p>
-            <span>Password</span>
-            <input type="password" [formField]="registerForm.password" />
-            <client-validation-error [fieldState]="registerForm.password()" [errorTemplate]="errorTemplate" />
-            <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'password'" [errorTemplate]="errorTemplate" />
-        </p>
-        <p>
-            <span>Confirm Password</span>
-            <input type="password" [formField]="registerForm.confirmPassword" />
-            <client-validation-error [fieldState]="registerForm.confirmPassword()" [errorTemplate]="errorTemplate" />
-        </p>
+    <spinnable-panel [showSpinner]="registerSpinner()">
+        <div id="register">
+            <h2>Register</h2>
+            <p>
+                <span>Login</span>
+                <input type="text" [formField]="registerForm.login" />
+                <client-validation-error [fieldState]="registerForm.login()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <span>Password</span>
+                <input type="password" [formField]="registerForm.password" />
+                <client-validation-error [fieldState]="registerForm.password()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'password'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <span>Confirm Password</span>
+                <input type="password" [formField]="registerForm.confirmPassword" />
+                <client-validation-error [fieldState]="registerForm.confirmPassword()" [errorTemplate]="errorTemplate" />
+            </p>
 
-        <p>
-            <button type="submit" (click)="register()">Register</button>
-        </p>
-    </div>
+            <p>
+                <button type="submit" (click)="register()">Register</button>
+            </p>
+        </div>
+    </spinnable-panel>
     }
     @if (loginMode() == 'register-as-admin')
     {
-    <div id="register-as-admin" *appIfHasPermission="'RegisterAdmin'">
-        <h2>Register as admin</h2>
-        <p>
-            <span>Login</span>
-            <input type="text" placeholder="Login" [formField]="registerAsAdminForm.login" />
-            <client-validation-error [fieldState]="registerAsAdminForm.login()" [errorTemplate]="errorTemplate" />
-            <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
-        </p>
-        <p>
-            <span>Password</span>
-            <input type="password" placeholder="Password" [formField]="registerAsAdminForm.password" />
-            <client-validation-error [fieldState]="registerAsAdminForm.password()" [errorTemplate]="errorTemplate" />
-            <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'password'" [errorTemplate]="errorTemplate" />
-        </p>
-        <p>
-            <span>Confirm Password</span>
-            <input type="password" placeholder="Confirm Password" [formField]="registerAsAdminForm.confirmPassword" />
-            <client-validation-error [fieldState]="registerAsAdminForm.confirmPassword()" [errorTemplate]="errorTemplate" />
-        </p>
-        <p>
-            <input id="loginAsNewUser" type="checkbox" [formField]="registerAsAdminForm.loginAsNewUser" />
-            <label for="loginAsNewUser">login as new user</label>
-        </p>
+    <spinnable-panel [showSpinner]="registerAsAdminSpinner()">
+        <div id="register-as-admin" *appIfHasPermission="'RegisterAdmin'">
+            <h2>Register as admin</h2>
+            <p>
+                <span>Login</span>
+                <input type="text" placeholder="Login" [formField]="registerAsAdminForm.login" />
+                <client-validation-error [fieldState]="registerAsAdminForm.login()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <span>Password</span>
+                <input type="password" placeholder="Password" [formField]="registerAsAdminForm.password" />
+                <client-validation-error [fieldState]="registerAsAdminForm.password()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'password'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <span>Confirm Password</span>
+                <input type="password" placeholder="Confirm Password" [formField]="registerAsAdminForm.confirmPassword" />
+                <client-validation-error [fieldState]="registerAsAdminForm.confirmPassword()" [errorTemplate]="errorTemplate" />
+            </p>
+            <p>
+                <input id="loginAsNewUser" type="checkbox" [formField]="registerAsAdminForm.loginAsNewUser" />
+                <label for="loginAsNewUser">login as new user</label>
+            </p>
 
-        <p>
-            <button type="submit" (click)="registerAsAdmin()">Register as admin</button>
-        </p>
-    </div>
+            <p>
+                <button type="submit" (click)="registerAsAdmin()">Register as admin</button>
+            </p>
+        </div>
+    </spinnable-panel>
     }
 </dialog>
 
