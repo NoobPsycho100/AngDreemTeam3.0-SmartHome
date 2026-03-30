@@ -3,7 +3,7 @@ import { AdminRegisterRequest, LoginRequest, RegisterRequest } from '../../api/g
 import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { map, Observable, throwError } from 'rxjs';
+import { map, Observable, throwError, timer } from 'rxjs';
 import { OkResult, ValidationErrorResult } from '../models/response';
 import { AuthData, Unauthorized } from '../domain/auth';
 
@@ -25,8 +25,13 @@ export class AuthService
 
         localStorage.setItem(this.localAuthKey, token);
         
-        // Angular will not re-check route guards
         this.router.navigateByUrl('');
+        if (user != Unauthorized)
+        {
+            timer(10).subscribe(() => {
+                this.router.navigateByUrl('dashboard');
+            });
+        }
     }
 
     private getCurrentAuthFromToken(token: string | null): AuthData
@@ -103,7 +108,6 @@ export class AuthService
         this._currentAuthData.set(Unauthorized);
         localStorage.removeItem(this.localAuthKey);
         
-        // Angular will not re-check route guards
         this.router.navigateByUrl('');
     }
 };
