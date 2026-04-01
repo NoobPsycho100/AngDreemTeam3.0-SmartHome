@@ -4,9 +4,15 @@ namespace SmartHome.Core.Domain;
 
 public class User
 {
-    public string Login { get; set; }
-    public string Password { get; set; }
-    public Role[] Roles { get; set; }
+    public long Id { get; set; }
+
+    public required string Login { get; set; }
+    
+    public required string Password { get; set; }
+    
+    public required Role[] Roles { get; set; }
 
     public string? CreatedBy { get; set; }
+
+    public long? CreatedByUserId { get; set; }
 }

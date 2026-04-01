@@ -2,6 +2,7 @@
 
 public enum ClaimType
 {
+    UserId,
     Login,
     Roles,
     Permissions,

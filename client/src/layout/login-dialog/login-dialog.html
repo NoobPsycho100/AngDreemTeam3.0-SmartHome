@@ -39,6 +39,7 @@
                 <input type="text" [formField]="registerForm.login" />
                 <client-validation-error [fieldState]="registerForm.login()" [errorTemplate]="errorTemplate" />
                 <server-validation-error [serverErrors]="registerServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerServerErrors()" [forField]="''" [errorTemplate]="errorTemplate" />
             </p>
             <p>
                 <span>Password</span>
@@ -68,6 +69,7 @@
                 <input type="text" placeholder="Login" [formField]="registerAsAdminForm.login" />
                 <client-validation-error [fieldState]="registerAsAdminForm.login()" [errorTemplate]="errorTemplate" />
                 <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="'login'" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="registerAsAdminServerErrors()" [forField]="''" [errorTemplate]="errorTemplate" />
             </p>
             <p>
                 <span>Password</span>

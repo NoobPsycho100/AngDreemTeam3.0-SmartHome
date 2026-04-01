@@ -6,18 +6,18 @@ namespace SmartHome.Web.Validation.Login;
 
 public class RegisterValidator : AbstractValidator<RegisterRequest>
 {
-    private readonly ILoginService _loginService;
+    private readonly IUserService _userService;
 
-    public RegisterValidator(ILoginService loginService)
+    public RegisterValidator(IUserService userService)
     {
-        _loginService = loginService;
+        _userService = userService;
 
         RuleFor(x => x.Login).NotEmpty().WithMessage("Login field should not be empty");
 
         RuleFor(x => x.Password).NotEmpty().WithMessage("Password field should not be empty")
                                 .MinimumLength(5).WithMessage("Password should be longer than 5 symbols");
 
-        RuleFor(x => x.Login).MustAsync(async (x, cancellation) => string.IsNullOrEmpty(x) || await _loginService.IsLoginFree(x))
+        RuleFor(x => x.Login).MustAsync(async (x, cancellation) => string.IsNullOrEmpty(x) || await _userService.IsLoginFree(x))
                              .WithMessage("Specified login is alredy taken");
     }
 }

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartHome.Core\SmartHome.Core.csproj" />
-    <ProjectReference Include="..\SmartHome.Data.Mock\SmartHome.Data.Mock.csproj" />
+    <ProjectReference Include="..\SmartHome.Data\SmartHome.Data.csproj" />
   </ItemGroup>
 
 </Project>

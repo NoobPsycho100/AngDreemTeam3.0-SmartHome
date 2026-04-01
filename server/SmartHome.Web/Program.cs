@@ -30,6 +30,7 @@ builder.Services.AddControllers(options =>
 {
     options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
     options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
+    options.Filters.Add<ErrorsFilter>();
 });
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddOpenApi();

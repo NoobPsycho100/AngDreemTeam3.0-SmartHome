@@ -19,7 +19,7 @@ export class ServerValidationErrors
         let errors = this.serverErrors();
         let field = this.forField();
         
-        let shownErrors = errors.validationErrors.filter(x => !field || x.key.toUpperCase() == field.toUpperCase()).map(x => x.error);
+        let shownErrors = errors.validationErrors.filter(x => field == null || x.key.toUpperCase() == field.toUpperCase()).map(x => x.error);
         
         return shownErrors;
     });

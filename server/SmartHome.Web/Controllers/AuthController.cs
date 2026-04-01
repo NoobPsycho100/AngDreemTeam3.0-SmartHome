@@ -12,26 +12,26 @@ namespace SmartHome.Web.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly ILoginService _loginService;
+    private readonly IUserService _userService;
 
-    public AuthController(IAuthService authService, ILoginService loginService)
+    public AuthController(IAuthService authService, IUserService userService)
     {
         _authService = authService;
-        _loginService = loginService;
+        _userService = userService;
     }
 
     [Route("check-login")]
     [HttpGet]
     public async Task<bool> IsLoginFree(string login)
     {
-        return await _loginService.IsLoginFree(login);
+        return await _userService.IsLoginFree(login);
     }
 
     [Route("login")]
     [HttpPost]
     public async Task<ActionResult> Login([FromBody] LoginRequest request)
     {
-        if (!await _loginService.ValidateLogin(request.Login, request.Password))
+        if (!await _userService.ValidateLogin(request.Login, request.Password))
             return Unauthorized();
 
         return await ReturnAuthToken(request.Login);
@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
     [Authorize]
     public async Task<ActionResult> RefreshToken()
     {
-        var currentUser = _authService.GetCurrentUser();
+        var currentUser = _authService.GetCurrentLogin();
         if (string.IsNullOrEmpty(currentUser))
             return Unauthorized();
 
@@ -53,10 +53,10 @@ public class AuthController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> RegisterUser([FromBody] RegisterRequest request)
     {
-        if (!await _loginService.IsLoginFree(request.Login))
+        if (!await _userService.IsLoginFree(request.Login))
             return Unauthorized();
 
-        await _loginService.Register(request.Login, request.Password, _authService.GetCurrentUser(), Role.User);
+        await _userService.Register(request.Login, request.Password, _authService.GetCurrentLogin(), _authService.GetCurrentUserId(), Role.User);
 
         return await ReturnAuthToken(request.Login);
     }
@@ -66,10 +66,10 @@ public class AuthController : ControllerBase
     [AuthPermission(Permission.RegisterAdmin)]
     public async Task<ActionResult> RegisterAdmin([FromBody] AdminRegisterRequest request)
     {
-        if (!await _loginService.IsLoginFree(request.Login))
+        if (!await _userService.IsLoginFree(request.Login))
             return Unauthorized();
 
-        await _loginService.Register(request.Login, request.Password, _authService.GetCurrentUser(), request.Roles);
+        await _userService.Register(request.Login, request.Password, _authService.GetCurrentLogin(), _authService.GetCurrentUserId(), request.Roles);
 
         return await ReturnAuthToken(request.Login);
     }

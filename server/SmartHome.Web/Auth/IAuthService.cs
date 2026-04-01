@@ -2,7 +2,8 @@
 
 public interface IAuthService
 {
-    public string? GetCurrentUser();
+    public string? GetCurrentLogin();
+    public long? GetCurrentUserId();
 
     /// <summary>
     /// Generates Jwt Bearer token with login, roles and permissions
