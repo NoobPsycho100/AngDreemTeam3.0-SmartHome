@@ -4,7 +4,7 @@ namespace SmartHome.Core.Domain;
 
 public class User
 {
-    public long Id { get; set; }
+    public long UserId { get; set; }
 
     public required string Login { get; set; }
     

@@ -1,4 +1,4 @@
-﻿namespace SmartHome.Web.Model;
+﻿namespace SmartHome.Web.Model.Login;
 
 public class LoginRequest
 {

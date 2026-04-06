@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SmartHome.Web.Model;
+namespace SmartHome.Web.Model.Login;
 
 public class RegisterRequest
 {

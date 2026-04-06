@@ -42,7 +42,7 @@ public class AuthService: IAuthService
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimType.UserId.ToString(), user.Id.ToString()),
+            new Claim(ClaimType.UserId.ToString(), user.UserId.ToString()),
             new Claim(ClaimType.Login.ToString(), login),
             new Claim(ClaimType.Roles.ToString(), String.Join('|', user.Roles)),
             new Claim(ClaimType.Permissions.ToString(), String.Join('|', user.Roles.GetRolesPermissions())),

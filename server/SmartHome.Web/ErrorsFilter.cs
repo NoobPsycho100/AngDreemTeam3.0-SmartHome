@@ -30,6 +30,12 @@ public class ErrorsFilter : IExceptionFilter
                 }
             }
         }
+
+        if (context.Exception is UnauthorizedAccessException)
+        {
+            context.Result = new UnauthorizedResult();
+            context.ExceptionHandled = true;
+        }
     }
 
     private void HandleValidationError(ExceptionContext context, ValidationException error)
