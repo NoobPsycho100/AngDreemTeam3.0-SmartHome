@@ -21,7 +21,7 @@ public class RoomsController : ControllerBase
 
     [Route("my-rooms")]
     [HttpGet]
-    [AuthPermission(Permission.DevicesView)]
+    [AuthPermission(Permission.RoomsView)]
     public async Task<List<RoomModel>> GetMyRooms()
     {
         var userId = _authService.GetCurrentUserId();

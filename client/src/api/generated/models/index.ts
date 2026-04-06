@@ -14,6 +14,19 @@ export interface AdminRegisterRequest {
     password: string;
 }
 
+export interface DeviceModel {
+    userDeviceId?: number | string;
+    userId: number | string;
+    deviceTypeId: number | string;
+    deviceType: string;
+    userRoomId: number | string;
+    roomName: null | string;
+    roomType: string;
+    deviceName: null | string;
+    comment: null | string;
+    indicatorColor: null | string;
+}
+
 export interface LoginRequest {
     login: string;
     password: string;
@@ -30,6 +43,16 @@ export const Role = {
     User: 'User' as Role,
     Admin: 'Admin' as Role
 };
+
+export interface RoomModel {
+    userRoomId?: number | string;
+    userId: number | string;
+    roomTypeId: number | string;
+    roomType: string;
+    roomName: null | string;
+    comment: null | string;
+    roomSize: null | number | string;
+}
 
 /** Request Options for Angular HttpClient requests */
 export interface RequestOptions<TResponseType extends 'arraybuffer' | 'blob' | 'json' | 'text'> {

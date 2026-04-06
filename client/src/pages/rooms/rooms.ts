@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'rooms',
   imports: [],
-  template: '<p>Rooms page</p>',
+  templateUrl: './rooms.html',
+  styleUrl: './rooms.less'
 })
 export class RoomsPage
 {
