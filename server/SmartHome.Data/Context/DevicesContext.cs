@@ -33,9 +33,11 @@ public partial class ApplicationDbContext : DbContext
     private void CreateDevicesData(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserDevice>().HasData(
-                  new UserDevice { UserDeviceId = 1, UserId = 2, UserRoomId = 1, DeviceTypeId = 1, DeviceName = "Room Light", Comment = null, IndicatorColor = null, },
-                  new UserDevice { UserDeviceId = 2, UserId = 2, UserRoomId = 1, DeviceTypeId = 3, DeviceName = "Room TV", Comment = null, IndicatorColor = null, },
-                  new UserDevice { UserDeviceId = 3, UserId = 2, UserRoomId = 1, DeviceTypeId = 1, DeviceName = null, Comment = null, IndicatorColor = null, }
+                  new UserDevice { UserDeviceId = 1, UserId = 2, UserRoomId = 1, DeviceTypeId = 1, DeviceName = "Room Light", Comment = null, IndicatorColor = "red", },
+                  new UserDevice { UserDeviceId = 2, UserId = 2, UserRoomId = 1, DeviceTypeId = 3, DeviceName = "Room TV", Comment = null, IndicatorColor = "blue", },
+                  new UserDevice { UserDeviceId = 3, UserId = 2, UserRoomId = 1, DeviceTypeId = 1, DeviceName = null, Comment = null, IndicatorColor = null, },
+                  new UserDevice { UserDeviceId = 4, UserId = 2, UserRoomId = 3, DeviceTypeId = 2, DeviceName = null, Comment = null, IndicatorColor = "green", },
+                  new UserDevice { UserDeviceId = 5, UserId = 2, UserRoomId = 3, DeviceTypeId = 4, DeviceName = null, Comment = null, IndicatorColor = "blue", }
         );
     }
 }

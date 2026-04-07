@@ -1,10 +1,10 @@
 import { signalStore, withState, withMethods, patchState, withHooks, withProps, withComputed } from '@ngrx/signals';
 import { Permission, Role } from '../domain/auth';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { computed } from '@angular/core';
 
 export interface Auth
 {
+    readonly userId: number;
     readonly login: string;
     readonly token: string;
     readonly roles: Role[];
@@ -13,19 +13,17 @@ export interface Auth
 export interface AuthData
 {
     readonly status: 'authorized' | 'unauthorized' | 'loading';
+    readonly initState: boolean;
     readonly auth: Auth | null;
 }
 
-export const Unauthorized: AuthData = { status: 'unauthorized', auth: null };
-
 const LocalAuthKey: string = 'local-auth';
 
-// Create the SignalStore
 export const AuthStore = signalStore(
     { providedIn: 'root' },
-    withState(Unauthorized),
+    withState<AuthData>({ status: 'unauthorized', initState: true, auth: null }),
     withComputed(store => ({
-        fullState: () => { return { auth: store.auth(), status: store.status() } },
+        fullState: () => { return { auth: store.auth(), status: store.status(), initState: store.initState() } },
     })),
     withProps(store => ({
         changes$: toObservable(store.fullState),
@@ -35,13 +33,13 @@ export const AuthStore = signalStore(
     withMethods((store) => ({
         logout() {
             localStorage.removeItem(LocalAuthKey);
-            patchState(store, Unauthorized);
+            patchState(store, { status: 'unauthorized', initState: false, auth: null });
         },
         loadAuthFromLocal(){
             let token = localStorage.getItem(LocalAuthKey);
-            this.setAuthToken(token);
+            this.setAuthToken(token, true);
         },
-        setAuthToken(token: string | null){
+        setAuthToken(token: string | null, initState: boolean = false){
             if (!token)
             {
                 this.logout();
@@ -50,8 +48,8 @@ export const AuthStore = signalStore(
 
             let tokenData = atob(token.split('.')[1]);
             let userData = JSON.parse(tokenData);
-            let auth: Auth = { login: userData.Login, token: token, roles: userData.Roles, permissions: userData.Permissions };
-            let authData: AuthData = { status: 'authorized', auth: auth };
+            let auth: Auth = { userId: userData.UserId, login: userData.Login, token: token, roles: userData.Roles, permissions: userData.Permissions };
+            let authData: AuthData = { status: 'authorized', initState: initState, auth: auth };
             patchState(store, authData);
         
             localStorage.setItem(LocalAuthKey, token);

@@ -1,7 +1,7 @@
 import { Directive, inject, Input, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Permission } from "../../core/domain/auth";
-import { AuthStore } from "../../core/services/auth-store";
+import { AuthStore } from "../../core/services/services";
 
 @Directive(
     {

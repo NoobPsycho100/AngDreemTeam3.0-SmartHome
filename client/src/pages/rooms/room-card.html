@@ -1,0 +1,17 @@
+<div class="card room-card">
+    <h3>{{ room().roomName ?? room().roomType }}</h3>
+    <spinnable-panel [showSpinner]="devicesStore.status() == 'loading' || devicesStore.status() == 'not loaded'">
+        <div class="room-devices">
+            @if (devicesStore.status() == 'loaded')
+            {
+                @for (device of devicesStore.devices() | keyFilter: { userRoomId: room().userRoomId }; track device.userDeviceId)
+                {
+                    <p>
+                        <span class="color-indicator" [style.backgroundColor]="device.indicatorColor"></span>
+                        {{ device.deviceName ?? device.deviceType }}
+                    </p>
+                }
+            }
+        </div>
+    </spinnable-panel>
+</div>

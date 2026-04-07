@@ -1,13 +1,13 @@
 import { Component, ElementRef, HostListener, inject, model, signal, viewChild, WritableSignal } from '@angular/core';
 import { form, FormField, minLength, required, validate } from '@angular/forms/signals';
-import { AuthService } from '../../core/services/auth-service';
+import { AuthService } from '../../core/services/services';
 import { NullValidationErrorResult, ValidationErrorResult } from '../../core/models/response';
 import { AdminRegisterRequest, LoginRequest, RegisterRequest, Role } from '../../api/generated/models';
-import { ServerValidationErrors } from '../../shared/components/server-validation-error';
+import { ServerValidationErrors } from '../../shared/components/errors/server-validation-error';
 import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
-import { ClientValidationErrors } from '../../shared/components/client-validation-error';
-import { SpinnablePanel } from '../../shared/components/spinnable-panel';
-import { MultiTagsSelector } from '../../shared/components/multi-tags-selector';
+import { ClientValidationErrors } from '../../shared/components/errors/client-validation-error';
+import { SpinnablePanel } from '../../shared/components/spinner/spinnable-panel';
+import { MultiTagsSelector } from '../../shared/components/tags/multi-tags-selector';
 
 export type LoginMode = 'login' | 'register' | 'register-as-admin';
 

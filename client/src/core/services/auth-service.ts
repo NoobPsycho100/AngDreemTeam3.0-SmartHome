@@ -2,7 +2,7 @@ import { AuthService as ApiAuthService } from '../../api/generated/services';
 import { AdminRegisterRequest, LoginRequest, RegisterRequest } from '../../api/generated/models';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, throwError, timer } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { OkResult, ValidationErrorResult } from '../models/response';
 import { AuthStore } from './auth-store';
 import { HttpResponse } from '@angular/common/http';
@@ -16,9 +16,16 @@ export class AuthService
 
     public constructor()
     {
-        this.authStore.statusChanges$.subscribe(
-            (status) => this.router.navigateByUrl(status == 'authorized' ? 'dashboard' : "")
+        this.authStore.changes$.subscribe(
+            state => { 
+                if (!state.initState)
+                    this.router.navigateByUrl(state.status == 'authorized' ? 'dashboard' : "");
+            }
         );
+        
+        //this.authStore.changes$.subscribe(
+        //    state => { console.log(state); }
+        //);
     }
 
     public checkIsLoginFree(login: string): Observable<boolean>
@@ -62,9 +69,7 @@ export class AuthService
     private handleAuthTokenResponse(authResponse$: Observable<HttpResponse<any>>, loginAsNewUser: boolean): Observable<OkResult>
     {
         if (loginAsNewUser)
-        {
             this.authStore.setLoading();
-        }
 
         return authResponse$.pipe(
                 map(response =>
@@ -73,25 +78,19 @@ export class AuthService
                     if (token == null)
                     {
                         if (loginAsNewUser)
-                        {
                             this.authStore.setError();
-                        }
                         return throwError(new ValidationErrorResult([{key: 'login', error: 'unspecified error'}]));
                     }
 
                     if (loginAsNewUser)
-                    {
                         this.authStore.setAuthToken(token);
-                    }
 
                     return new OkResult();
                 }),
                 catchError(error =>
                 {
                     if (loginAsNewUser)
-                    {
                         this.authStore.setError();
-                    }
 
                     return throwError(error);
                 })

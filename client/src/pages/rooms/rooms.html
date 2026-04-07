@@ -1,1 +1,13 @@
-<p>Rooms page</p>
+<h2>ROOMS</h2>
+@if (roomsStore.status() == 'loading' || roomsStore.status() == 'not loaded')
+{
+    <p>Loading rooms...</p>
+}
+
+@if (roomsStore.status() == 'loaded')
+{
+    @for (room of roomsStore.rooms(); track room.userRoomId)
+    {
+        <room-card [room]="room" />
+    }
+}

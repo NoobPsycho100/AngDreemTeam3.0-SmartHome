@@ -2,7 +2,7 @@ import { inject } from "@angular/core";
 import { CanActivateFn } from "@angular/router";
 import { map } from "rxjs";
 import { Permission } from "../../core/domain/auth";
-import { AuthStore } from "../../core/services/auth-store";
+import { AuthStore } from "../../core/services/services";
 
 export const authPermissionsGuardFactory: (reqPermission: Permission) => CanActivateFn =
 (permission: Permission) =>

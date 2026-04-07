@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { EmptyPage } from '../pages/empty';
-import { DashboardPage } from '../pages/dashboard';
+import { DashboardPage } from '../pages/dashboard/dashboard';
 import { RoomsPage } from '../pages/rooms/rooms';
-import { DevicesPage } from '../pages/devices';
+import { DevicesPage } from '../pages/devices/devices';
 import { ScenesPage } from '../pages/scenes';
 import { AutomationPage } from '../pages/automation';
 import { EnergyPage } from '../pages/energy';

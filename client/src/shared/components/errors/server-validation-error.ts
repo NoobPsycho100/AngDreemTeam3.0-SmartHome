@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, Input, input, TemplateRef } from '@angular/core';
-import { ValidationErrorResult } from '../../core/models/response';
+import { ValidationErrorResult } from '../../../core/models/response';
 
 @Component({
     selector: 'server-validation-error',

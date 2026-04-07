@@ -1,8 +1,7 @@
 import { Component, computed, inject, viewChild } from '@angular/core';
-import { AuthService } from '../../core/services/auth-service';
+import { AuthStore, AuthService } from '../../core/services/services';
 import { LoginDialog, LoginMode } from '../login-dialog/login-dialog';
 import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
-import { AuthStore } from '../../core/services/auth-store';
 
 @Component({
     selector: 'app-header',
