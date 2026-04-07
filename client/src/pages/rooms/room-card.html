@@ -2,10 +2,10 @@
     <h3>
         {{ room().roomName ?? room().roomType }}
         {{ room().roomSize }}
-        <img class="edit-device" src="/icons/edit.png"
+        <img class="edit-room" src="/icons/edit.png"
              *appIfHasPermission="'RoomsEdit'"
              (click)="onEditRoom()" />
-        <img class="edit-device" src="/icons/delete.png"
+        <img class="edit-room" src="/icons/delete.png"
              *appIfHasPermission="'RoomsEdit'"
              (click)="onDeleteRoom()" />
     </h3>
