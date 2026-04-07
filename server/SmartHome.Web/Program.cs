@@ -65,6 +65,13 @@ builder.Services.RegisterCustomDependencies(builder.Configuration);
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    var delay = builder.Configuration.GetValue<int>("Delay");
+    await Task.Delay(delay);
+    await next(context);
+});
+
 if (app.Environment.IsDevelopment())
 {
     // https://localhost:7086/openapi/v1.json
