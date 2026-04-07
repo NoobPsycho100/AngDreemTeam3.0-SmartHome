@@ -41,4 +41,12 @@ public class RoomsService : IRoomsService
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteUserRoom(long userId, long roomId)
+    {
+        var userRoom = await _context.UserRooms.SingleAsync(x => x.UserId == userId && x.UserRoomId == roomId);
+        _context.UserRooms.Remove(userRoom);
+
+        await _context.SaveChangesAsync();
+    }
 }

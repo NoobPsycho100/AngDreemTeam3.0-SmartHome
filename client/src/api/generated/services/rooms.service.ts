@@ -128,4 +128,34 @@ export class RoomsService {
 
         return this.httpClient.put(url, addRoomRequest, requestOptions);
     }
+
+    apiRoomsDeleteRoomDelete(userRoomId?: number, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
+    apiRoomsDeleteRoomDelete(userRoomId?: number, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
+    apiRoomsDeleteRoomDelete(userRoomId?: number, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    apiRoomsDeleteRoomDelete(userRoomId?: number, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/api/rooms/delete-room`;
+
+        let params = new HttpParams();
+        if (userRoomId != null) {
+            params = HttpParamsBuilder.addToHttpParams(params, userRoomId, 'userRoomId');
+        }
+
+        let headers: HttpHeaders;
+        if (options?.headers instanceof HttpHeaders) {
+            headers = options.headers;
+        } else {
+            headers = new HttpHeaders(options?.headers);
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            headers,
+            params,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.delete(url, requestOptions);
+    }
 }

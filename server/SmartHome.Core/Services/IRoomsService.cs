@@ -9,4 +9,6 @@ public interface IRoomsService
     public Task AddUserRoom(long userId, UserRoom room);
 
     public Task UpdateUserRoom(long userId, long roomId, UserRoom room);
+
+    public Task DeleteUserRoom(long userId, long roomId);
 }

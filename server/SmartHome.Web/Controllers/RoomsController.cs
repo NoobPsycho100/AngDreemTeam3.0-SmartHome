@@ -96,4 +96,16 @@ public class RoomsController : ControllerBase
         };
         await _roomsService.AddUserRoom(userId.Value, room);
     }
+
+    [Route("delete-room")]
+    [HttpDelete]
+    [AuthPermission(Permission.RoomsEdit)]
+    public async Task DeleteRoom(long userRoomId)
+    {
+        var userId = _authService.GetCurrentUserId();
+        if (userId == null)
+            throw new UnauthorizedAccessException();
+
+        await _roomsService.DeleteUserRoom(userId.Value, userRoomId);
+    }
 }

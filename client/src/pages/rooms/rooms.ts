@@ -39,6 +39,12 @@ export class RoomsPage implements OnInit
         this.editRoomDialog()?.showEditDialog(room);
     }
     
+    onDeleteRoom(room: RoomModel)
+    {
+        if (!!room.userRoomId)
+            this.roomsService.deleteRoom(room.userRoomId).subscribe();
+    }
+    
     onAddRoom()
     {
         this.editRoomDialog()?.showAddDialog();

@@ -21,6 +21,7 @@ export class RoomCard implements OnInit
     public editDevice = output<DeviceModel>();
     public addDevice = output<number | undefined>();
     public editRoom = output();
+    public deleteRoom = output();
 
     public room = input.required<RoomModel>();
 
@@ -47,5 +48,10 @@ export class RoomCard implements OnInit
     onEditRoom()
     {
         this.editRoom.emit();
+    }
+
+    onDeleteRoom()
+    {
+        this.deleteRoom.emit();
     }
 }

@@ -5,6 +5,9 @@
         <img class="edit-device" src="/icons/edit.png"
              *appIfHasPermission="'RoomsEdit'"
              (click)="onEditRoom()" />
+        <img class="edit-device" src="/icons/delete.png"
+             *appIfHasPermission="'RoomsEdit'"
+             (click)="onDeleteRoom()" />
     </h3>
     <spinnable-panel [showSpinner]="devicesStore.status() == 'loading' || devicesStore.status() == 'not loaded'">
         <div class="room-devices">

@@ -83,5 +83,13 @@ export class RoomsService
             .pipe(map(() => {
                 this.reloadRooms();
             }));
-    }    
+    }
+
+    public deleteRoom(userRoomId: number): Observable<any>
+    {
+        return this.apiRoomsService.apiRoomsDeleteRoomDelete(userRoomId, 'body')
+            .pipe(map(() => {
+                this.reloadRooms();
+            }));
+    }
 };
