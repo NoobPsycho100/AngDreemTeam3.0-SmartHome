@@ -12,6 +12,8 @@
 {
     @for (room of roomsStore.rooms(); track room.userRoomId)
     {
-        <room-card [room]="room" />
+        <room-card [room]="room" (editDevice)="onEditDevice($event)" />
     }
 }
+
+<edit-device-dialog #editDeviceDialog/>

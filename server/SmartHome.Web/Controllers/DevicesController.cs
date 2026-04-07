@@ -13,11 +13,25 @@ public class DevicesController : ControllerBase
 {
     private readonly IAuthService _authService;
     private readonly IDevicesService _devicesService;
+    private readonly IDeviceTypesService _deviceTypesService;
 
-    public DevicesController(IAuthService authService, IDevicesService devicesService)
+    public DevicesController(IAuthService authService, IDevicesService devicesService, IDeviceTypesService deviceTypesService)
     {
         _authService = authService;
         _devicesService = devicesService;
+        _deviceTypesService = deviceTypesService;
+    }
+
+    [Route("device-types")]
+    [HttpGet]
+    public async Task<List<DeviceTypeModel>> GetDeviceTypes()
+    {
+        var devices = await _deviceTypesService.GetDeviceTypes();
+        return devices.Select(x => new DeviceTypeModel
+        {
+            DeviceTypeId = x.DeviceTypeId,
+            TypeName = x.TypeName,
+        }).ToList();
     }
 
     [Route("my-devices")]

@@ -19,6 +19,9 @@
                                 }
                             }
                         </span>
+                        <img class="edit-device" src="/icons/edit.png"
+                             *appIfHasPermission="'DevicesEdit'"
+                             (click)="onEditDevice(device)" />
                         <span class="is-on-indicator">
                             <input  id="is-on-{{device.userDeviceId}}" type="checkbox" [checked]="device.isOn"
                                     (change)="setDeviceOn(device.userDeviceId, $event)" />

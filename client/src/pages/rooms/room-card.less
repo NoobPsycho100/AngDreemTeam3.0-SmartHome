@@ -1,5 +1,10 @@
 @import (reference) "../../palette.less";
 
+.card.room-card:hover
+{
+    background: white;
+}
+
 .card.room-card
 {
     float: left;
@@ -10,12 +15,12 @@
 
     margin: 0 20px 10px 0;
     padding: 5px 15px;
-    width: 280px;
+    width: 320px;
     min-height: 220px;
 
     .room-device:hover
     {
-        background: white;
+        background: @block-background;
         border-radius: 5px;
         margin: -5px;
         padding: 5px;
@@ -24,14 +29,14 @@
     {
         margin: 10px 0px;
 
-        img.device-icon, span.device-info, span.color-indicator-container, span.is-on-indicator
+        img.device-icon, span.device-info, span.color-indicator-container, span.is-on-indicator, img.edit-device
         {
             display: inline-block;
             height: 32px;
             margin-right: 10px;
         }
 
-        span.color-indicator-container, span.is-on-indicator
+        span.color-indicator-container, span.is-on-indicator, img.edit-device
         {
             float: right;
         }
@@ -75,8 +80,17 @@
             input[type=checkbox]:checked + label
             {
                 background-image: url(/icons/checkbox-on.png);
-
             }
+        }
+
+        span.is-on-indicator label, img.edit-device
+        {
+            cursor: pointer;
+        }
+
+        img.edit-device
+        {
+            margin-top: 4px;
         }
     }
 }

@@ -9,8 +9,8 @@
 */
 import { HttpContext, HttpHeaders } from "@angular/common/http";
 export interface AddDeviceRequest {
-    deviceTypeId: number | string;
-    userRoomId: number | string;
+    deviceTypeId: number;
+    userRoomId: number;
     deviceName: null | string;
     comment: null | string;
     indicatorColor: null | string;
@@ -26,11 +26,11 @@ export interface AdminRegisterRequest {
 }
 
 export interface DeviceModel {
-    userDeviceId?: number | string;
-    userId: number | string;
-    deviceTypeId: number | string;
+    userDeviceId?: number;
+    userId: number;
+    deviceTypeId: number;
     deviceType: string;
-    userRoomId: number | string;
+    userRoomId: number;
     roomName: null | string;
     roomType: string;
     deviceName: null | string;
@@ -39,6 +39,11 @@ export interface DeviceModel {
     deviceIcon: null | string;
     customTags: Array<string>;
     isOn: boolean;
+}
+
+export interface DeviceTypeModel {
+    deviceTypeId: number;
+    typeName: string;
 }
 
 export interface LoginRequest {
@@ -59,24 +64,24 @@ export const Role = {
 };
 
 export interface RoomModel {
-    userRoomId?: number | string;
-    userId: number | string;
-    roomTypeId: number | string;
+    userRoomId?: number;
+    userId: number;
+    roomTypeId: number;
     roomType: string;
     roomName: null | string;
     comment: null | string;
-    roomSize: null | number | string;
+    roomSize: null | number;
 }
 
 export interface SetDeviceOnRequest {
-    userDeviceId?: number | string;
+    userDeviceId?: number;
     isOn?: boolean;
 }
 
 export interface UpdateDeviceRequest {
-    userDeviceId?: number | string;
-    deviceTypeId: number | string;
-    userRoomId: number | string;
+    userDeviceId?: number;
+    deviceTypeId: number;
+    userRoomId: number;
     deviceName: null | string;
     comment: null | string;
     indicatorColor: null | string;

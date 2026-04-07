@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, DeviceModel, SetDeviceOnRequest, UpdateDeviceRequest, AddDeviceRequest } from "../models";
+import { RequestOptions, DeviceTypeModel, DeviceModel, SetDeviceOnRequest, UpdateDeviceRequest, AddDeviceRequest } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class DevicesService {
@@ -23,6 +23,30 @@ export class DevicesService {
     private createContextWithClientId(existingContext?: HttpContext): HttpContext {
         const context = existingContext || new HttpContext();
         return context.set(this.clientContextToken, 'default');
+    }
+
+    apiDevicesDeviceTypesGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<Array<DeviceTypeModel>>;
+    apiDevicesDeviceTypesGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<Array<DeviceTypeModel>>>;
+    apiDevicesDeviceTypesGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<Array<DeviceTypeModel>>>;
+    apiDevicesDeviceTypesGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/api/devices/device-types`;
+
+        let headers: HttpHeaders;
+        if (options?.headers instanceof HttpHeaders) {
+            headers = options.headers;
+        } else {
+            headers = new HttpHeaders(options?.headers);
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            headers,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
     }
 
     apiDevicesMyDevicesGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<Array<DeviceModel>>;

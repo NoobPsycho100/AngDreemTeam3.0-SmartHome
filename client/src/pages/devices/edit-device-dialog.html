@@ -1,0 +1,83 @@
+<dialog #deviceDialog>
+    <div id="header">
+    @if (mode() == 'add')
+    {
+        <h2>Add New Device</h2>
+    }
+    @if (mode() == 'edit')
+    {
+        <h2>Edit Device</h2>
+    }
+    </div>
+    <spinnable-panel [showSpinner]="spinner()">
+        <div id="device">
+            <p class="full-width">
+                <span>Device Name</span>
+                <input type="text" [formField]="deviceForm.deviceName" />
+                <client-validation-error [fieldState]="deviceForm.deviceName()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'deviceName'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p class="full-width">
+                <span class="half-width left">
+                    <span>Device Type</span>
+                    <select [formField]="deviceForm.deviceTypeId">
+                        <option value="">Select device type</option>
+                        @for (deviceType of devicesTypesStore.types(); track deviceType.deviceTypeId)
+                        {
+                            <option [value]="deviceType.deviceTypeId">{{ deviceType.typeName }}</option>
+                        }
+                    </select>
+                    <client-validation-error [fieldState]="deviceForm.deviceTypeId()" [errorTemplate]="errorTemplate" />
+                    <server-validation-error [serverErrors]="serverErrors()" [forField]="'deviceTypeId'" [errorTemplate]="errorTemplate" />
+                </span>
+                <span class="half-width right">
+                    <span>Assign to Room</span>
+                    <select [formField]="deviceForm.userRoomId">
+                        <option value="">Select room</option>
+                        @for (room of roomsStore.rooms(); track room.userRoomId)
+                        {
+                            <option [value]="room.userRoomId">{{ room.roomName ?? room.roomType }}</option>
+                        }
+                    </select>
+                    <client-validation-error [fieldState]="deviceForm.userRoomId()" [errorTemplate]="errorTemplate" />
+                    <server-validation-error [serverErrors]="serverErrors()" [forField]="'userRoomId'" [errorTemplate]="errorTemplate" />
+                </span>
+            </p>
+            <p class="full-width">
+                <span>Comments</span>
+                <textarea [formField]="deviceForm.comment"></textarea>
+                <client-validation-error [fieldState]="deviceForm.comment()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'comment'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p class="full-width">
+                <span>Custom Tags</span>
+                <multi-tags-selector [formField]="deviceForm.customTags" [allowCustomTags]="true" />
+                <client-validation-error [fieldState]="deviceForm.customTags()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'customTags'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p class="full-width">
+                <input id="isDeviceOn" type="checkbox" [formField]="deviceForm.isOn" />
+                <label for="isDeviceOn" id="isDeviceOnStyled"></label>
+                <label for="isDeviceOn">Turn Device On</label>
+                <client-validation-error [fieldState]="deviceForm.isOn()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'isOn'" [errorTemplate]="errorTemplate" />
+            </p>
+            
+            <p class="full-width">
+                @if (mode() == 'add')
+                {
+                    <button *appIfHasPermission="'DevicesEdit'" (click)="addDevice()">Add New Device</button>
+                }
+                @if (mode() == 'edit')
+                {
+                    <button *appIfHasPermission="'DevicesEdit'" (click)="updateDevice()">Update Device</button>
+                }
+                <button id="cancel" (click)="closeDialog()">Cancel</button>
+            </p>
+        </div>
+    </spinnable-panel>
+</dialog>
+
+<ng-template #errorTemplate let-error="error">
+    <span class="validation-error">{{error}}</span>
+</ng-template>
