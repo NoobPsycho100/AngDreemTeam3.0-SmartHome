@@ -24,16 +24,17 @@ public class DevicesService: IDevicesService
             .ToListAsync();
     }
 
-    public async Task AddUserDevice(UserDevice device)
+    public async Task AddUserDevice(long userId, UserDevice device)
     {
+        device.UserId = userId;
         await _context.UserDevices.AddAsync(device);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateUserDevice(long roomId, UserDevice device)
+    public async Task UpdateUserDevice(long userId, long deviceId, UserDevice device)
     {
-        var userDevice = await _context.UserDevices.SingleAsync(x => x.UserRoomId == roomId);
-        userDevice.UserId = device.UserId;
+        var userDevice = await _context.UserDevices.SingleAsync(x => x.UserId == userId && x.UserDeviceId == deviceId);
+        userDevice.UserId = userId;
         userDevice.DeviceTypeId = device.DeviceTypeId;
         userDevice.DeviceType = device.DeviceType;
         userDevice.UserRoomId = device.UserRoomId;
@@ -41,6 +42,17 @@ public class DevicesService: IDevicesService
         userDevice.DeviceName = device.DeviceName;
         userDevice.Comment = device.Comment;
         userDevice.IndicatorColor = device.IndicatorColor;
+        userDevice.DeviceIcon = device.DeviceIcon;
+        userDevice.CustomTags = device.CustomTags;
+        userDevice.IsOn = device.IsOn;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SetDeviceOn(long userId, long deviceId, bool isOn)
+    {
+        var userDevice = await _context.UserDevices.SingleAsync(x => x.UserId == userId && x.UserDeviceId == deviceId);
+        userDevice.IsOn = isOn;
 
         await _context.SaveChangesAsync();
     }

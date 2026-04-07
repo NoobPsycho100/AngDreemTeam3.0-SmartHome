@@ -22,15 +22,16 @@ public class RoomsService : IRoomsService
             .ToListAsync();
     }
 
-    public async Task AddUserRoom(UserRoom room)
+    public async Task AddUserRoom(long userId, UserRoom room)
     {
+        room.UserId = userId;
         await _context.UserRooms.AddAsync(room);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateUserRoom(long roomId, UserRoom room)
+    public async Task UpdateUserRoom(long userId, long roomId, UserRoom room)
     {
-        var userRoom = await _context.UserRooms.SingleAsync(x => x.UserRoomId == roomId);
+        var userRoom = await _context.UserRooms.SingleAsync(x => x.UserId == userId && x.UserRoomId == roomId);
         userRoom.UserId = room.UserId;
         userRoom.RoomTypeId = room.RoomTypeId;
         userRoom.RoomType = room.RoomType;

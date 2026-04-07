@@ -6,7 +6,7 @@ import { AuthStore } from './auth-store';
 
 export interface UserRoomsData
 {
-    readonly status: 'not loaded' | 'loaded' | 'loading';
+    readonly status: 'not loaded' | 'loaded' | 'loading' | 'error';
     readonly userId: number;
     readonly rooms: RoomModel[];
 }
@@ -37,7 +37,7 @@ export const UserRoomsStore = signalStore(
             patchState(store, { status: 'loading' });
         },
         setError(){
-            patchState(store, { status: 'not loaded' });
+            patchState(store, { status: 'error' });
         }
     })),
     withHooks((store, authStore = inject(AuthStore)) => ({

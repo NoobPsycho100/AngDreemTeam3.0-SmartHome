@@ -194,6 +194,102 @@
         }
       }
     },
+    "/api/devices/set-on": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDeviceOnRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDeviceOnRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDeviceOnRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/devices/update-device": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/devices/add-device": {
+      "put": {
+        "tags": [
+          "Devices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDeviceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDeviceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDeviceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/rooms/my-rooms": {
       "get": {
         "tags": [
@@ -235,6 +331,70 @@
   },
   "components": {
     "schemas": {
+      "AddDeviceRequest": {
+        "required": [
+          "deviceTypeId",
+          "userRoomId",
+          "deviceName",
+          "comment",
+          "indicatorColor",
+          "deviceIcon",
+          "customTags",
+          "isOn"
+        ],
+        "type": "object",
+        "properties": {
+          "deviceTypeId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "userRoomId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "deviceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "indicatorColor": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "deviceIcon": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isOn": {
+            "type": "boolean"
+          }
+        }
+      },
       "AdminRegisterRequest": {
         "required": [
           "login",
@@ -266,7 +426,10 @@
           "roomType",
           "deviceName",
           "comment",
-          "indicatorColor"
+          "indicatorColor",
+          "deviceIcon",
+          "customTags",
+          "isOn"
         ],
         "type": "object",
         "properties": {
@@ -331,6 +494,21 @@
               "null",
               "string"
             ]
+          },
+          "deviceIcon": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isOn": {
+            "type": "boolean"
           }
         }
       },
@@ -429,6 +607,94 @@
               "string"
             ],
             "format": "double"
+          }
+        }
+      },
+      "SetDeviceOnRequest": {
+        "type": "object",
+        "properties": {
+          "userDeviceId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "isOn": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateDeviceRequest": {
+        "required": [
+          "deviceTypeId",
+          "userRoomId",
+          "deviceName",
+          "comment",
+          "indicatorColor",
+          "deviceIcon",
+          "customTags",
+          "isOn"
+        ],
+        "type": "object",
+        "properties": {
+          "userDeviceId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "deviceTypeId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "userRoomId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          },
+          "deviceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "indicatorColor": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "deviceIcon": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isOn": {
+            "type": "boolean"
           }
         }
       }

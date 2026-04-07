@@ -21,4 +21,10 @@ public class DeviceModel
     public required string? Comment { get; set; }
 
     public required string? IndicatorColor { get; set; }
+
+    public required string? DeviceIcon { get; set; }
+
+    public required string[] CustomTags { get; set; }
+
+    public required bool IsOn { get; set; }
 }

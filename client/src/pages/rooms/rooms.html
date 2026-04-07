@@ -3,6 +3,10 @@
 {
     <p>Loading rooms...</p>
 }
+@if (roomsStore.status() == 'error')
+{
+    <p>Error while loading rooms, please try later</p>
+}
 
 @if (roomsStore.status() == 'loaded')
 {

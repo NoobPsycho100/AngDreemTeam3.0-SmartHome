@@ -22,4 +22,10 @@ export class RoomCard implements OnInit
     ngOnInit() {
         this.devicesService.ensureDevicesLoaded();
     }
+
+    setDeviceOn(userDeviceId: number, event: Event)
+    {
+        const isOn = (event.target as HTMLInputElement).checked;
+        this.devicesService.setDeviceOn(userDeviceId, isOn);
+    }
 }

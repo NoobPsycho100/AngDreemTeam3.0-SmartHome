@@ -20,6 +20,9 @@ public class UserDevice
 
     public required string? IndicatorColor { get; set; }
 
-    // TODO: add tags
-    //public List<string> CustomTags { get; set; }
+    public required string? DeviceIcon { get; set; }
+
+    public required string CustomTags { get; set; }
+
+    public required bool IsOn { get; set; }
 }

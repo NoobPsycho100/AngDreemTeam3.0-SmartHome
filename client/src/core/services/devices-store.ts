@@ -6,7 +6,7 @@ import { AuthStore } from './auth-store';
 
 export interface UserDevicesData
 {
-    readonly status: 'not loaded' | 'loaded' | 'loading';
+    readonly status: 'not loaded' | 'loaded' | 'loading' | 'error';
     readonly userId: number;
     readonly devices: DeviceModel[];
 }
@@ -33,11 +33,19 @@ export const UserDevicesStore = signalStore(
         setDevices(userId: number, devices: DeviceModel[]){
             patchState(store, { userId: userId, status: 'loaded', devices: devices });
         },
+        setDeviceOn(userDeviceId: number, isOn: boolean){
+            let devices = store.devices();
+            devices.forEach(d => {
+                if (d.userDeviceId == userDeviceId)
+                    d.isOn = isOn;
+            });
+            patchState(store, { devices: devices });
+        },
         setLoading(){
             patchState(store, { status: 'loading' });
         },
         setError(){
-            patchState(store, { status: 'not loaded' });
+            patchState(store, { status: 'error' });
         }
     })),
     withHooks((store, authStore = inject(AuthStore)) => ({

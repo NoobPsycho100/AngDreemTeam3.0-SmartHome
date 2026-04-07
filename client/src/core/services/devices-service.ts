@@ -35,4 +35,16 @@ export class DevicesService
                 }
             });
     }
+
+    public setDeviceOn(userDeviceId: number, isOn: boolean)
+    {
+        const request = { userDeviceId, isOn };
+
+        this.apiDevicesService.apiDevicesSetOnPost(request, 'body')
+            .subscribe({
+                next: () => {
+                    this.devicesStore.setDeviceOn(userDeviceId, isOn);
+                },
+            });
+    }
 };
