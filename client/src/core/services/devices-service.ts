@@ -4,7 +4,7 @@ import { AuthStore } from './auth-store';
 import { UserDevicesStore } from './devices-store';
 import { DeviceTypesStore } from './devices-types-store';
 import { map, Observable } from 'rxjs';
-import { UpdateDeviceRequest } from '../../api/generated';
+import { AddDeviceRequest, UpdateDeviceRequest } from '../../api/generated';
 
 @Injectable({providedIn: 'root'})
 export class DevicesService
@@ -79,6 +79,14 @@ export class DevicesService
     public updateDevice(request: UpdateDeviceRequest): Observable<any>
     {
         return this.apiDevicesService.apiDevicesUpdateDevicePost(request, 'body')
+            .pipe(map(() => {
+                this.reloadDevices();
+            }));
+    }
+
+    public addDevice(request: AddDeviceRequest): Observable<any>
+    {
+        return this.apiDevicesService.apiDevicesAddDevicePut(request, 'body')
             .pipe(map(() => {
                 this.reloadDevices();
             }));

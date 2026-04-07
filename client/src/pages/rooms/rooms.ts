@@ -24,6 +24,11 @@ export class RoomsPage implements OnInit
     
     onEditDevice(device: DeviceModel)
     {
-        this.editDeviceDialog()?.showDialog("edit", device);
+        this.editDeviceDialog()?.showEditDialog(device);
+    }
+    
+    onAddDevice(roomId?: number)
+    {
+        this.editDeviceDialog()?.showAddDialog(roomId);
     }
 }

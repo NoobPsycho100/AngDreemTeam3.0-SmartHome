@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, inject, model, signal, viewChild }
 import { form, FormField, required } from '@angular/forms/signals';
 import { NullValidationErrorResult, ValidationErrorResult } from '../../core/models/response';
 import { DevicesService, DeviceTypesStore, UserDevicesStore, UserRoomsStore } from '../../core/services/services';
-import { DeviceModel, UpdateDeviceRequest } from '../../api/generated/models';
+import { AddDeviceRequest, DeviceModel, UpdateDeviceRequest } from '../../api/generated/models';
 import { ServerValidationErrors } from '../../shared/components/errors/server-validation-error';
 import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
 import { ClientValidationErrors } from '../../shared/components/errors/client-validation-error';
@@ -62,7 +62,35 @@ export class EditDeviceDialog
 
     protected addDevice()
     {
+        if (!this.deviceForm().valid())
+            return;
 
+        this.spinner.set(true);
+        let request: AddDeviceRequest = {
+            deviceTypeId: parseInt(this.deviceModel().deviceTypeId),
+            userRoomId: parseInt(this.deviceModel().userRoomId),
+            deviceName: this.makeNullable(this.deviceModel().deviceName),
+            comment: this.makeNullable(this.deviceModel().comment),
+            indicatorColor: this.makeNullable(this.deviceModel().indicatorColor),
+            deviceIcon: this.makeNullable(this.deviceModel().deviceIcon),
+            customTags: this.deviceModel().customTags,
+            isOn: this.deviceModel().isOn,
+        };
+        this.devicesService.addDevice(request)
+            .subscribe({
+                next: () =>
+                {
+                    this.serverErrors.set(NullValidationErrorResult);
+                    this.spinner.set(false);
+                    this.closeDialog();
+                },
+                error: error =>
+                {
+                    if (error instanceof ValidationErrorResult)
+                        this.serverErrors.set(error);
+                    this.spinner.set(false);
+                }
+            });
     }
 
     protected updateDevice()
@@ -75,10 +103,10 @@ export class EditDeviceDialog
             userDeviceId: this.deviceModel().userDeviceId,
             deviceTypeId: parseInt(this.deviceModel().deviceTypeId),
             userRoomId: parseInt(this.deviceModel().userRoomId),
-            deviceName: this.deviceModel().deviceName,
-            comment: this.deviceModel().comment,
-            indicatorColor: this.deviceModel().indicatorColor,
-            deviceIcon: this.deviceModel().deviceIcon,
+            deviceName: this.makeNullable(this.deviceModel().deviceName),
+            comment: this.makeNullable(this.deviceModel().comment),
+            indicatorColor: this.makeNullable(this.deviceModel().indicatorColor),
+            deviceIcon: this.makeNullable(this.deviceModel().deviceIcon),
             customTags: this.deviceModel().customTags,
             isOn: this.deviceModel().isOn,
         };
@@ -99,31 +127,39 @@ export class EditDeviceDialog
             });
     }
 
-    public showDialog(mode: EditDeviceMode, device: DeviceModel)
+    public showEditDialog(device: DeviceModel)
     {
         this.devicesService.ensureDeviceTypesLoaded();
-        this.mode.set(mode);
+
+        this.mode.set('edit');
         this.serverErrors.set(NullValidationErrorResult);
         this.spinner.set(false);
 
-        if (mode == 'edit')
-        {
-            this.deviceModel.set({
-                userDeviceId: device.userDeviceId,
-                deviceTypeId: device.deviceTypeId.toString(),
-                userRoomId: device.userRoomId.toString(),
-                deviceName: device.deviceName ?? '',
-                comment: device.comment ?? '',
-                indicatorColor: device.indicatorColor ?? '',
-                deviceIcon: device.deviceIcon ?? '',
-                customTags: device.customTags,
-                isOn: device.isOn,
-            });
-        }
-        if (mode == 'add')
-        {
-            this.deviceModel.set(EmptyDeviceModel);
-        }
+        this.deviceModel.set({
+            userDeviceId: device.userDeviceId,
+            deviceTypeId: device.deviceTypeId.toString(),
+            userRoomId: device.userRoomId.toString(),
+            deviceName: device.deviceName ?? '',
+            comment: device.comment ?? '',
+            indicatorColor: device.indicatorColor ?? '',
+            deviceIcon: device.deviceIcon ?? '',
+            customTags: device.customTags,
+            isOn: device.isOn,
+        });
+        
+        this.dialog()?.nativeElement.showModal();
+    }
+
+    public showAddDialog(roomId?: number)
+    {
+        this.devicesService.ensureDeviceTypesLoaded();
+
+        this.mode.set('add');
+        this.serverErrors.set(NullValidationErrorResult);
+        this.spinner.set(false);
+
+        let model = (!roomId) ? EmptyDeviceModel : { ...EmptyDeviceModel, userRoomId: roomId.toString()};
+        this.deviceModel.set(model);
         this.dialog()?.nativeElement.showModal();
     }
 
@@ -136,5 +172,12 @@ export class EditDeviceDialog
     protected onClick()
     {
         this.closeDialog();
+    }
+
+    private makeNullable(value: string): string | null
+    {
+        if (!value || value.trim() == '')
+            return null;
+        return value;
     }
 }

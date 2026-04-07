@@ -19,6 +19,7 @@ export class RoomCard implements OnInit
     protected readonly devicesStore = inject(UserDevicesStore);
 
     public editDevice = output<DeviceModel>();
+    public addDevice = output<number | undefined>();
 
     public room = input.required<RoomModel>();
 
@@ -35,5 +36,10 @@ export class RoomCard implements OnInit
     onEditDevice(device: DeviceModel)
     {
         this.editDevice.emit(device);
+    }
+
+    onAddDevice(roomId?: number)
+    {
+        this.addDevice.emit(roomId);
     }
 }
