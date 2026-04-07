@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, inject, model, signal, viewChild } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
 import { NullValidationErrorResult, ValidationErrorResult } from '../../core/models/response';
-import { DevicesService, DeviceTypesStore, UserDevicesStore, UserRoomsStore } from '../../core/services/services';
+import { DevicesService, DeviceTypesStore, UserRoomsStore } from '../../core/services/services';
 import { AddDeviceRequest, DeviceModel, UpdateDeviceRequest } from '../../api/generated/models';
 import { ServerValidationErrors } from '../../shared/components/errors/server-validation-error';
 import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
@@ -44,7 +44,6 @@ export class EditDeviceDialog
 {
     private readonly devicesService: DevicesService = inject(DevicesService);
     protected readonly roomsStore = inject(UserRoomsStore);
-    protected readonly devicesStore = inject(UserDevicesStore);
     protected readonly devicesTypesStore = inject(DeviceTypesStore);
 
     public readonly mode = model<EditDeviceMode>('add');

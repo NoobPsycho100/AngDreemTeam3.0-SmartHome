@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, RoomModel } from "../models";
+import { RequestOptions, RoomTypeModel, RoomModel, UpdateRoomRequest, AddRoomRequest } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class RoomsService {
@@ -23,6 +23,30 @@ export class RoomsService {
     private createContextWithClientId(existingContext?: HttpContext): HttpContext {
         const context = existingContext || new HttpContext();
         return context.set(this.clientContextToken, 'default');
+    }
+
+    apiRoomsRoomsTypesGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<Array<RoomTypeModel>>;
+    apiRoomsRoomsTypesGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<Array<RoomTypeModel>>>;
+    apiRoomsRoomsTypesGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<Array<RoomTypeModel>>>;
+    apiRoomsRoomsTypesGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/api/rooms/rooms-types`;
+
+        let headers: HttpHeaders;
+        if (options?.headers instanceof HttpHeaders) {
+            headers = options.headers;
+        } else {
+            headers = new HttpHeaders(options?.headers);
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            headers,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
     }
 
     apiRoomsMyRoomsGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<Array<RoomModel>>;
@@ -47,5 +71,61 @@ export class RoomsService {
         };
 
         return this.httpClient.get(url, requestOptions);
+    }
+
+    apiRoomsUpdateRoomPost(updateRoomRequest: UpdateRoomRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
+    apiRoomsUpdateRoomPost(updateRoomRequest: UpdateRoomRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
+    apiRoomsUpdateRoomPost(updateRoomRequest: UpdateRoomRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    apiRoomsUpdateRoomPost(updateRoomRequest: UpdateRoomRequest, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/api/rooms/update-room`;
+
+        let headers: HttpHeaders;
+        if (options?.headers instanceof HttpHeaders) {
+            headers = options.headers;
+        } else {
+            headers = new HttpHeaders(options?.headers);
+        }
+        // Set Content-Type for JSON requests if not already set
+        if (!headers.has('Content-Type')) {
+            headers = headers.set('Content-Type', 'application/json');
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            headers,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, updateRoomRequest, requestOptions);
+    }
+
+    apiRoomsAddRoomPut(addRoomRequest: AddRoomRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
+    apiRoomsAddRoomPut(addRoomRequest: AddRoomRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
+    apiRoomsAddRoomPut(addRoomRequest: AddRoomRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    apiRoomsAddRoomPut(addRoomRequest: AddRoomRequest, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/api/rooms/add-room`;
+
+        let headers: HttpHeaders;
+        if (options?.headers instanceof HttpHeaders) {
+            headers = options.headers;
+        } else {
+            headers = new HttpHeaders(options?.headers);
+        }
+        // Set Content-Type for JSON requests if not already set
+        if (!headers.has('Content-Type')) {
+            headers = headers.set('Content-Type', 'application/json');
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            headers,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.put(url, addRoomRequest, requestOptions);
     }
 }

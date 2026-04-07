@@ -1,0 +1,114 @@
+@import (reference) "../../palette.less";
+
+dialog
+{
+    background-color: @background;
+    color: @background-text-color;
+
+    width: 400px;
+    padding: 0;
+    border-radius: 10px;
+}
+
+div#header
+{
+    width: 100%;
+    background: @selected-background;
+    color: @selected-text-color;
+
+    h2
+    {
+        margin: 0 10px;
+        height: 40px;
+        font-size: 24px;
+        align-content: center;
+    }
+}
+
+div#room
+{
+    width: 360px;
+    margin: 20px auto;
+    display: table;
+
+    h2
+    {
+        text-align: center;
+    }
+
+    span
+    {
+        display: block;
+    }
+
+    p.full-width
+    {
+        width: 340px;
+    }
+
+    span.half-width
+    {
+        display: inline-block;
+        width: 160px;
+        vertical-align: top;
+    }
+
+    span.half-width.left
+    {
+        margin-right: 10px;
+    }
+
+    span.half-width.right
+    {
+        margin-left: 10px;
+    }
+
+    select, input:not([type=checkbox]), textarea
+    {
+        width: 100%;
+        box-sizing: border-box;
+        height: 24px;
+        border-radius: 5px;
+    }
+
+    textarea
+    {
+        resize: vertical;
+        height: 48px;
+    }
+
+    input[type=checkbox]
+    {
+        display:none;
+    }
+            
+    input[type=checkbox] + label
+    {
+        background-image: url(/icons/checkbox-off.png);
+        background-repeat: no-repeat;
+        margin-top: 12px;
+        height: 18px;
+        width: 32px;
+        display: inline-block;
+        padding: 0 0 0 0px;
+    }
+    input[type=checkbox]:checked + label
+    {
+        background-image: url(/icons/checkbox-on.png);
+    }
+
+    button
+    {
+        display: block;
+        width: 100px;
+        margin-left: 10px;
+        float: right;
+    }
+
+    button#cancel
+    {
+        background: none;
+        border: 1px solid @block-color;
+        color: @block-color;
+    }
+}

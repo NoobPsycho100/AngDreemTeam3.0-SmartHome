@@ -19,6 +19,13 @@ export interface AddDeviceRequest {
     isOn: boolean;
 }
 
+export interface AddRoomRequest {
+    roomTypeId: number;
+    roomName: null | string;
+    comment: null | string;
+    roomSize: null | number;
+}
+
 export interface AdminRegisterRequest {
     roles?: Array<Role>;
     login: string;
@@ -73,6 +80,11 @@ export interface RoomModel {
     roomSize: null | number;
 }
 
+export interface RoomTypeModel {
+    roomTypeId: number;
+    typeName: string;
+}
+
 export interface SetDeviceOnRequest {
     userDeviceId?: number;
     isOn?: boolean;
@@ -88,6 +100,14 @@ export interface UpdateDeviceRequest {
     deviceIcon: null | string;
     customTags: Array<string>;
     isOn: boolean;
+}
+
+export interface UpdateRoomRequest {
+    userRoomId?: number;
+    roomTypeId: number;
+    roomName: null | string;
+    comment: null | string;
+    roomSize: null | number;
 }
 
 /** Request Options for Angular HttpClient requests */

@@ -1,0 +1,56 @@
+<dialog #roomDialog>
+    <div id="header">
+    @if (mode() == 'add')
+    {
+        <h2>Add New Room</h2>
+    }
+    @if (mode() == 'edit')
+    {
+        <h2>Edit Room</h2>
+    }
+    </div>
+    <spinnable-panel [showSpinner]="spinner()">
+        <div id="room">
+            <p class="full-width">
+                <span>Room Name</span>
+                <input type="text" [formField]="roomForm.roomName" />
+                <client-validation-error [fieldState]="roomForm.roomName()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'roomName'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p class="full-width">
+                <span>Room Type</span>
+                <select [formField]="roomForm.roomTypeId">
+                    <option value="">Select room type</option>
+                    @for (roomType of roomTypesStore.types(); track roomType.roomTypeId)
+                    {
+                        <option [value]="roomType.roomTypeId">{{ roomType.typeName }}</option>
+                    }
+                </select>
+                <client-validation-error [fieldState]="roomForm.roomTypeId()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'roomTypeId'" [errorTemplate]="errorTemplate" />
+            </p>
+            <p class="full-width">
+                <span>Room Size</span>
+                <input type="number" step="any" [formField]="roomForm.roomSize" />
+                <client-validation-error [fieldState]="roomForm.roomSize()" [errorTemplate]="errorTemplate" />
+                <server-validation-error [serverErrors]="serverErrors()" [forField]="'roomSize'" [errorTemplate]="errorTemplate" />
+            </p>
+            
+            <p class="full-width">
+                @if (mode() == 'add')
+                {
+                    <button *appIfHasPermission="'RoomsEdit'" (click)="addRoom()">Add New Room</button>
+                }
+                @if (mode() == 'edit')
+                {
+                    <button *appIfHasPermission="'RoomsEdit'" (click)="updateRoom()">Update Room</button>
+                }
+                <button id="cancel" (click)="closeDialog()">Cancel</button>
+            </p>
+        </div>
+    </spinnable-panel>
+</dialog>
+
+<ng-template #errorTemplate let-error="error">
+    <span class="validation-error">{{error}}</span>
+</ng-template>

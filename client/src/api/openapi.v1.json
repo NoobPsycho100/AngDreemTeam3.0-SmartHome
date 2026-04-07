@@ -328,6 +328,44 @@
         }
       }
     },
+    "/api/rooms/rooms-types": {
+      "get": {
+        "tags": [
+          "Rooms"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomTypeModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomTypeModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomTypeModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/rooms/my-rooms": {
       "get": {
         "tags": [
@@ -362,6 +400,70 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/rooms/update-room": {
+      "post": {
+        "tags": [
+          "Rooms"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rooms/add-room": {
+      "put": {
+        "tags": [
+          "Rooms"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoomRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoomRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoomRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -422,6 +524,40 @@
           },
           "isOn": {
             "type": "boolean"
+          }
+        }
+      },
+      "AddRoomRequest": {
+        "required": [
+          "roomTypeId",
+          "roomName",
+          "comment",
+          "roomSize"
+        ],
+        "type": "object",
+        "properties": {
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roomSize": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
           }
         }
       },
@@ -626,6 +762,22 @@
           }
         }
       },
+      "RoomTypeModel": {
+        "required": [
+          "roomTypeId",
+          "typeName"
+        ],
+        "type": "object",
+        "properties": {
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "typeName": {
+            "type": "string"
+          }
+        }
+      },
       "SetDeviceOnRequest": {
         "type": "object",
         "properties": {
@@ -695,6 +847,44 @@
           },
           "isOn": {
             "type": "boolean"
+          }
+        }
+      },
+      "UpdateRoomRequest": {
+        "required": [
+          "roomTypeId",
+          "roomName",
+          "comment",
+          "roomSize"
+        ],
+        "type": "object",
+        "properties": {
+          "userRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roomSize": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
           }
         }
       }

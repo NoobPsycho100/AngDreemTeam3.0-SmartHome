@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { UserRoomsStore, RoomsService } from '../../core/services/services';
 import { RoomCard } from './room-card';
-import { DeviceModel } from '../../api/generated';
+import { DeviceModel, RoomModel } from '../../api/generated';
 import { EditDeviceDialog } from '../devices/edit-device-dialog';
+import { EditRoomDialog } from './edit-room-dialog';
 
 @Component({
     selector: 'rooms',
-    imports: [RoomCard, EditDeviceDialog],
+    imports: [RoomCard, EditDeviceDialog, EditRoomDialog],
     templateUrl: './rooms.html',
     styleUrl: './rooms.less'
 })
@@ -16,6 +17,7 @@ export class RoomsPage implements OnInit
     protected readonly roomsStore = inject(UserRoomsStore);
 
     private editDeviceDialog = viewChild<EditDeviceDialog>("editDeviceDialog");
+    private editRoomDialog = viewChild<EditRoomDialog>("editRoomDialog");
 
     ngOnInit()
     {
@@ -30,5 +32,15 @@ export class RoomsPage implements OnInit
     onAddDevice(roomId?: number)
     {
         this.editDeviceDialog()?.showAddDialog(roomId);
+    }
+    
+    onEditRoom(room: RoomModel)
+    {
+        this.editRoomDialog()?.showEditDialog(room);
+    }
+    
+    onAddRoom()
+    {
+        this.editRoomDialog()?.showAddDialog();
     }
 }

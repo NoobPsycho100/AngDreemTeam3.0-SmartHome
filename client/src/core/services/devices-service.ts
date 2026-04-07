@@ -12,7 +12,7 @@ export class DevicesService
     private readonly apiDevicesService = inject(ApiDevicesService);
     private readonly authStore = inject(AuthStore);
     private readonly devicesStore = inject(UserDevicesStore);
-    private readonly devicestypesStore = inject(DeviceTypesStore);
+    private readonly devicesTypesStore = inject(DeviceTypesStore);
     
     public constructor()
     {
@@ -23,19 +23,24 @@ export class DevicesService
 
     public ensureDeviceTypesLoaded()
     {
-        if (this.devicestypesStore.status() != 'not loaded')
+        if (this.devicesTypesStore.status() != 'not loaded')
             return;
 
-        this.devicestypesStore.setLoading();
+        this.reloadDeviceTypes();
+    }
+
+    public reloadDeviceTypes()
+    {
+        this.devicesTypesStore.setLoading();
 
         let userId = this.authStore.auth()?.userId;
         this.apiDevicesService.apiDevicesDeviceTypesGet('body')
             .subscribe({
                 next: types => {
-                    this.devicestypesStore.setDeviceTypes(types);
+                    this.devicesTypesStore.setDeviceTypes(types);
                 },
                 error: error => {
-                    this.devicestypesStore.setError();
+                    this.devicesTypesStore.setError();
                 }
             });
     }

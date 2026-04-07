@@ -44,6 +44,20 @@
                 </span>
             </p>
             <p class="full-width">
+                <span class="half-width left">
+                    <span>Indicator Color</span>
+                    <input type="text" [formField]="deviceForm.indicatorColor"/>
+                    <client-validation-error [fieldState]="deviceForm.indicatorColor()" [errorTemplate]="errorTemplate" />
+                    <server-validation-error [serverErrors]="serverErrors()" [forField]="'indicatorColor'" [errorTemplate]="errorTemplate" />
+                </span>
+                <span class="half-width right">
+                    <span>Icon</span>
+                    <input type="text" [formField]="deviceForm.deviceIcon"/>
+                    <client-validation-error [fieldState]="deviceForm.deviceIcon()" [errorTemplate]="errorTemplate" />
+                    <server-validation-error [serverErrors]="serverErrors()" [forField]="'deviceIcon'" [errorTemplate]="errorTemplate" />
+                </span>
+            </p>
+            <p class="full-width">
                 <span>Comments</span>
                 <textarea [formField]="deviceForm.comment"></textarea>
                 <client-validation-error [fieldState]="deviceForm.comment()" [errorTemplate]="errorTemplate" />
