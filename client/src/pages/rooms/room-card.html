@@ -1,0 +1,48 @@
+<div class="card room-card">
+    <h3>
+        {{ room().roomName ?? room().roomType }}
+        {{ room().roomSize }}
+        <img class="edit-room" src="/icons/edit.png"
+             *appIfHasPermission="'RoomsEdit'"
+             (click)="onEditRoom()" />
+        <img class="edit-room" src="/icons/delete.png"
+             *appIfHasPermission="'RoomsEdit'"
+             (click)="onDeleteRoom()" />
+    </h3>
+    <spinnable-panel [showSpinner]="devicesStore.status() == 'loading' || devicesStore.status() == 'not loaded'">
+        <div class="room-devices">
+            @if (devicesStore.status() == 'loaded')
+            {
+                @for (device of devicesStore.devices() | keyFilter: { userRoomId: room().userRoomId }; track device.userDeviceId)
+                {
+                    <p class="room-device">
+                        <img class="device-icon" [src]="device.deviceIcon" />
+                        <span class="device-info">
+                            {{ device.deviceName ?? device.deviceType }}
+                            @if (device.customTags.length > 0)
+                            {
+                                <br />
+                                @for (tag of device.customTags; track tag)
+                                {
+                                    <span class="device-tag">{{tag}}</span>
+                                }
+                            }
+                        </span>
+                        <img class="edit-device" src="/icons/edit.png"
+                             *appIfHasPermission="'DevicesEdit'"
+                             (click)="onEditDevice(device)" />
+                        <span class="is-on-indicator">
+                            <input  id="is-on-{{device.userDeviceId}}" type="checkbox" [checked]="device.isOn"
+                                    (change)="setDeviceOn(device.userDeviceId, $event)" />
+                            <label for="is-on-{{device.userDeviceId}}"></label>
+                        </span>
+                        <span class="color-indicator-container">
+                            <span class="color-indicator" [style.backgroundColor]="device.indicatorColor"></span>
+                        </span>
+                    </p>
+                }
+            }
+        <button (click)="onAddDevice(room().userRoomId)" style="margin-top: 20px;">Add new device</button>
+        </div>
+    </spinnable-panel>
+</div>

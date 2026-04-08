@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartHome.Core.Domain.Enums;
 using SmartHome.Core.Services;
 using SmartHome.Web.Auth;
-using SmartHome.Web.Model;
+using SmartHome.Web.Model.Login;
 
 namespace SmartHome.Web.Controllers;
 

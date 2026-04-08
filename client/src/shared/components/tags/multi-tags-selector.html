@@ -1,0 +1,7 @@
+@if (allowCustomTags())
+{
+    <input #newTagInput type="text" placeholder="add here new tag" (keyup.enter)="addTag(newTagInput.value)" />
+}
+@for (tag of availabeTags(); track tag) {
+    <span [class.selected]="value()?.indexOf(tag) != -1" (click)="tagClick(tag)">{{tag}}</span>
+}

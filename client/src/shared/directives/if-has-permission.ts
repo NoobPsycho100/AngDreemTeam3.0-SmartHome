@@ -1,7 +1,7 @@
 import { Directive, inject, Input, TemplateRef, ViewContainerRef } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Permission } from "../../core/domain/auth";
-import { AuthService } from "../../core/services/auth-service";
+import { AuthStore } from "../../core/services/services";
 
 @Directive(
     {
@@ -11,7 +11,8 @@ import { AuthService } from "../../core/services/auth-service";
 )
 export class AppIfHasPermission
 {
-    private readonly authService: AuthService = inject(AuthService);
+    private readonly authStore = inject(AuthStore);
+    
     private previousSubscription: Subscription | null = null;
 
     constructor(
@@ -24,11 +25,11 @@ export class AppIfHasPermission
         if (this.previousSubscription != null)
             this.previousSubscription.unsubscribe();
 
-        this.previousSubscription = this.authService.currentAuthChange.subscribe(auth => {
-            if (!auth.isAuthorized)
+        this.previousSubscription = this.authStore.changes$.subscribe(auth => {
+            if (auth.status != 'authorized')
                 this.viewContainer.clear();
 
-            else if (auth.permissions.indexOf(permission) == -1)
+            else if (auth.auth?.permissions.indexOf(permission) == -1)
                 this.viewContainer.clear();
 
             // current user has permissions

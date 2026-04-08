@@ -1,5 +1,5 @@
 import { Component, computed, inject, viewChild } from '@angular/core';
-import { AuthService } from '../../core/services/auth-service';
+import { AuthStore, AuthService } from '../../core/services/services';
 import { LoginDialog, LoginMode } from '../login-dialog/login-dialog';
 import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
 
@@ -12,9 +12,10 @@ import { AppIfHasPermission } from '../../shared/directives/if-has-permission';
 export class Header
 {
     private readonly authService: AuthService = inject(AuthService);
+    private readonly authStore = inject(AuthStore);
 
-    protected readonly isAuthorized = computed(() => this.authService.currentAuthData().isAuthorized);
-    protected readonly currentUserName = computed(() => this.authService.currentAuthData().login);
+    protected readonly isAuthorized = computed(() => this.authStore.status() == 'authorized');
+    protected readonly currentUserName = computed(() => this.authStore.auth()?.login);
 
     private loginDialog = viewChild<LoginDialog>("loginDialog");
 

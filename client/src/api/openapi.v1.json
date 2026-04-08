@@ -155,10 +155,434 @@
           }
         }
       }
+    },
+    "/api/devices/device-types": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceTypeModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceTypeModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceTypeModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices/my-devices": {
+      "get": {
+        "tags": [
+          "Devices"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices/set-on": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDeviceOnRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDeviceOnRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDeviceOnRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/devices/update-device": {
+      "post": {
+        "tags": [
+          "Devices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/devices/add-device": {
+      "put": {
+        "tags": [
+          "Devices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDeviceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDeviceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDeviceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rooms/rooms-types": {
+      "get": {
+        "tags": [
+          "Rooms"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomTypeModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomTypeModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomTypeModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rooms/my-rooms": {
+      "get": {
+        "tags": [
+          "Rooms"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rooms/update-room": {
+      "post": {
+        "tags": [
+          "Rooms"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rooms/add-room": {
+      "put": {
+        "tags": [
+          "Rooms"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoomRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoomRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoomRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rooms/delete-room": {
+      "delete": {
+        "tags": [
+          "Rooms"
+        ],
+        "parameters": [
+          {
+            "name": "userRoomId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AddDeviceRequest": {
+        "required": [
+          "deviceTypeId",
+          "userRoomId",
+          "deviceName",
+          "comment",
+          "indicatorColor",
+          "deviceIcon",
+          "customTags",
+          "isOn"
+        ],
+        "type": "object",
+        "properties": {
+          "deviceTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "indicatorColor": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "deviceIcon": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isOn": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AddRoomRequest": {
+        "required": [
+          "roomTypeId",
+          "roomName",
+          "comment",
+          "roomSize"
+        ],
+        "type": "object",
+        "properties": {
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roomSize": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          }
+        }
+      },
       "AdminRegisterRequest": {
         "required": [
           "login",
@@ -176,6 +600,102 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "DeviceModel": {
+        "required": [
+          "userId",
+          "deviceTypeId",
+          "deviceType",
+          "userRoomId",
+          "roomName",
+          "roomType",
+          "deviceName",
+          "comment",
+          "indicatorColor",
+          "deviceIcon",
+          "customTags",
+          "isOn"
+        ],
+        "type": "object",
+        "properties": {
+          "userDeviceId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceType": {
+            "type": "string"
+          },
+          "userRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roomType": {
+            "type": "string"
+          },
+          "deviceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "indicatorColor": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "deviceIcon": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isOn": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DeviceTypeModel": {
+        "required": [
+          "deviceTypeId",
+          "typeName"
+        ],
+        "type": "object",
+        "properties": {
+          "deviceTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "typeName": {
             "type": "string"
           }
         }
@@ -216,12 +736,191 @@
           "User",
           "Admin"
         ]
+      },
+      "RoomModel": {
+        "required": [
+          "userId",
+          "roomTypeId",
+          "roomType",
+          "roomName",
+          "comment",
+          "roomSize"
+        ],
+        "type": "object",
+        "properties": {
+          "userRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomType": {
+            "type": "string"
+          },
+          "roomName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roomSize": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "RoomTypeModel": {
+        "required": [
+          "roomTypeId",
+          "typeName"
+        ],
+        "type": "object",
+        "properties": {
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "typeName": {
+            "type": "string"
+          }
+        }
+      },
+      "SetDeviceOnRequest": {
+        "type": "object",
+        "properties": {
+          "userDeviceId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isOn": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateDeviceRequest": {
+        "required": [
+          "deviceTypeId",
+          "userRoomId",
+          "deviceName",
+          "comment",
+          "indicatorColor",
+          "deviceIcon",
+          "customTags",
+          "isOn"
+        ],
+        "type": "object",
+        "properties": {
+          "userDeviceId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deviceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "indicatorColor": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "deviceIcon": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customTags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isOn": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateRoomRequest": {
+        "required": [
+          "roomTypeId",
+          "roomName",
+          "comment",
+          "roomSize"
+        ],
+        "type": "object",
+        "properties": {
+          "userRoomId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roomName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "roomSize": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          }
+        }
       }
     }
   },
   "tags": [
     {
       "name": "Auth"
+    },
+    {
+      "name": "Devices"
+    },
+    {
+      "name": "Rooms"
     }
   ]
 }

@@ -9,9 +9,9 @@ namespace SmartHome.Data.Services;
 public class UserService: IUserService
 {
 
-    private readonly UsersContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public UserService(UsersContext context)
+    public UserService(ApplicationDbContext context)
     {
         _context = context;
     }

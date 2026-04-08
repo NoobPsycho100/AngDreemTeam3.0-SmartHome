@@ -1,0 +1,28 @@
+<h2>ROOMS</h2>
+<p>
+    <button (click)="onAddRoom()">Add new room</button>
+</p>
+
+@if (roomsStore.status() == 'loading' || roomsStore.status() == 'not loaded')
+{
+    <p>Loading rooms...</p>
+}
+@if (roomsStore.status() == 'error')
+{
+    <p>Error while loading rooms, please try later</p>
+}
+
+@if (roomsStore.status() == 'loaded')
+{
+    @for (room of roomsStore.rooms(); track room.userRoomId)
+    {
+        <room-card [room]="room"
+            (editDevice)="onEditDevice($event)"
+            (addDevice)="onAddDevice($event)"
+            (editRoom)="onEditRoom(room)"
+            (deleteRoom)="onDeleteRoom(room)" />
+    }
+}
+
+<edit-device-dialog #editDeviceDialog/>
+<edit-room-dialog #editRoomDialog/>

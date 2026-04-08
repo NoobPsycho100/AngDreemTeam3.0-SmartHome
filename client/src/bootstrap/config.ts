@@ -5,18 +5,18 @@ import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@a
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ServerValidationInterceptor } from './interceptors/server-validation-interceptor';
 import { provideNgOpenapi } from '../api/generated';
+import { provideStore } from '@ngrx/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
-
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ServerValidationInterceptor, multi: true },
-
     provideNgOpenapi({
       basePath: 'https://localhost:7086',
-    })
-  ]
+    }),
+    provideStore(),
+  ],
 };

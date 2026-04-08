@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using SmartHome.Core.Services;
-using SmartHome.Web.Model;
+using SmartHome.Web.Model.Login;
 
 namespace SmartHome.Web.Validation.Login;
 

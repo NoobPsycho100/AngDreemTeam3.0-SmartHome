@@ -1,0 +1,107 @@
+@import (reference) "../../palette.less";
+
+.card.room-card:hover
+{
+    background: white;
+}
+
+.card.room-card
+{
+    float: left;
+    border: 2px @block-border solid;
+    border-radius: 10px;
+    background-color: @block-background;
+    color: @block-color;
+
+    margin: 0 20px 10px 0;
+    padding: 5px 15px;
+    width: 320px;
+    min-height: 250px;
+
+    .room-device:hover
+    {
+        background: @block-background;
+        border-radius: 5px;
+        margin: -5px;
+        padding: 5px;
+    }
+    .room-device
+    {
+        margin: 10px 0px;
+
+        img.device-icon, span.device-info, span.color-indicator-container, span.is-on-indicator, img.edit-device
+        {
+            display: inline-block;
+            height: 32px;
+            margin-right: 10px;
+        }
+
+        span.color-indicator-container, span.is-on-indicator, img.edit-device
+        {
+            float: right;
+        }
+
+        span.device-info span.device-tag
+        {
+            border-radius: 5px;
+            background: lightgray;
+            margin: 3px;
+            padding: 0 5px;
+            display: inline-block;
+        }
+
+        span.color-indicator-container span.color-indicator
+        {
+            margin-top: 16px;
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            margin-right: 5px;
+            border-radius: 7px;
+        }
+
+        span.is-on-indicator
+        {
+            input[type=checkbox]
+            {
+                display:none;
+            }
+            
+            input[type=checkbox] + label
+            {
+                background-image: url(/icons/checkbox-off.png);
+                background-repeat: no-repeat;
+                margin-top: 12px;
+                height: 18px;
+                width: 32px;
+                display: inline-block;
+                padding: 0 0 0 0px;
+            }
+            input[type=checkbox]:checked + label
+            {
+                background-image: url(/icons/checkbox-on.png);
+            }
+        }
+
+        span.is-on-indicator label, img.edit-device
+        {
+            cursor: pointer;
+        }
+
+        img.edit-device
+        {
+            margin-top: 4px;
+        }
+    }
+
+    img.edit-room
+    {
+        cursor: pointer;
+        margin-top: -20px;
+        float: right;
+        display: inline-block;
+        height: 32px;
+        margin-right: -10px;
+        margin-left: 20px;
+    }
+}
