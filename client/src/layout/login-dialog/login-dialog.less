@@ -1,0 +1,60 @@
+@import (reference) "../../palette.less";
+
+dialog
+{
+    background-color:  @background;
+    color: @background-text-color;
+
+    width: 500px;
+    padding: 0;
+}
+
+div#method-selector
+{
+    width: 100%;
+    display: flex;
+
+    background: @selected-background;
+    color: @selected-text-color;
+
+    a
+    {
+        flex: 1;
+        height: 40px;
+        font-size: 16px;
+        text-align: center;
+        align-content: center;
+    }
+
+    a.selected
+    {
+        background: @background;
+        color: @background-text-color;
+    }
+
+    a:not(.selected)
+    {
+        cursor: pointer;
+    }
+
+    a:hover:not(.selected)
+    {
+        font-style: italic;
+    }
+}
+
+div#login, div#register, div#register-as-admin
+{
+    margin: 20px auto;
+    display: table;
+
+    h2
+    {
+        text-align: center;
+    }
+
+    span
+    {
+        display: block;
+    }
+}

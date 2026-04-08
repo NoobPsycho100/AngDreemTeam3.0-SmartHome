@@ -1,0 +1,9 @@
+{
+    "input": "openapi.v1.json",
+    "output": "generated",
+    "options": {
+        "dateType": "Date",
+        "enumStyle": "union",
+        "generateServices": true
+    }
+}

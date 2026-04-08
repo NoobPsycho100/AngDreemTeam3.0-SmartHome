@@ -1,0 +1,11 @@
+<div id="layout" [class]="menuState()">
+  <div id="header">
+    <app-header />
+  </div>
+  <div id="menu">
+    <app-menu #menu />
+  </div>
+  <div id="content">
+    <router-outlet />
+  </div>
+</div>

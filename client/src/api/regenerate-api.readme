@@ -1,0 +1,11 @@
+api/generated code is generated from openapi (swagger) json.
+
+to simply regenerate:
+ 1. save current openapi json file into ./src/api/openapi.v1.json
+    curl https://localhost:7086/openapi/v1.json > ./src/api/openapi.v1.json
+ 2. run the following command from project folder:
+    node_modules\.bin\ng-openapi -c ./src/api/ng-openapi-gen.json
+    or
+    node_modules\.bin\ng-openapi -i ./src/api/openapi.v1.json -o ./src/api/generated
+
+for more info - https://ng-openapi.dev/

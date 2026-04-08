@@ -1,0 +1,5 @@
+@if (fieldState().invalid()) {
+    @for (error of fieldState().errors(); track error.message) {
+        <ng-container *ngTemplateOutlet="errorTemplate; context: { error: error.message }"/>
+    }
+}

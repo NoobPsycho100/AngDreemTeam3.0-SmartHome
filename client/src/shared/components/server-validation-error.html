@@ -1,0 +1,5 @@
+@if (showErrors().length > 0) {
+    @for (error of showErrors(); track error) {
+        <ng-container *ngTemplateOutlet="errorTemplate; context: { error: error }"/>
+    }
+}

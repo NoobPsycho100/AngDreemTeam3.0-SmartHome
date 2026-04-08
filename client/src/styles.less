@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import (reference) "palette.less";
+
+input:not([type=checkbox]), button
+{
+    display: block;
+    width: 200px;
+    height: 24px;
+    border-radius: 5px;
+    border: 1px solid;
+    margin: 2px 0;
+    padding: 2px 10px;
+    box-sizing: content-box;
+}
+
+button
+{
+    text-align: center;
+
+    background: @selected-background;
+    color: @selected-text-color;
+}
+
+span.validation-error
+{
+    color: red;
+}
